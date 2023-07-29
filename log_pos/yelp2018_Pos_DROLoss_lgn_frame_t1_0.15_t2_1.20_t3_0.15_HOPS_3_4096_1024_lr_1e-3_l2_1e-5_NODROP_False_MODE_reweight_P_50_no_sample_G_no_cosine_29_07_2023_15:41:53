@@ -1,0 +1,29 @@
+2023-07-29 15:41:53,971 - [INFO] - {'dataset': 'yelp2018', 'data_path': './data/', 'name': 'yelp2018_Pos_DROLoss_lgn_frame_t1_0.15_t2_1.20_t3_0.15_HOPS_3_4096_1024_lr_1e-3_l2_1e-5_NODROP_False_MODE_reweight_P_50_no_sample_G_no_cosine_29_07_2023_15:41:53', 'train_ratio': 0.8, 'gnn': 'lgn_frame', 'epoch': 1000, 'batch_size': 4096, 'test_batch_size': 2048, 'dim': 64, 'l2': 1e-05, 'lr': 0.001, 'mess_dropout': False, 'mess_dropout_rate': 0.1, 'edge_dropout': False, 'edge_dropout_rate': 0.1, 'batch_test_flag': True, 'ns': 'mixgcf', 'K': 1, 'n_negs': 1024, 'pool': 'mean', 'cuda': True, 'gpu_id': 0, 'Ks': '[10, 20, 50]', 'test_flag': 'part', 'context_hops': 3, 'eval_earlystop': 'recall@20', 'tau_plus': 0.1, 'temperature': 0.15, 'beta': 1.0, 'sample_num': 2048, 's_neg': 64, 's_pos': 64, 'norm_change': False, 'norm_path': None, 'u_norm': True, 'i_norm': True, 'alpha': 0.1, 'save': False, 'save_analyses': False, 'log_hard_rate': False, 'norm_before': False, 'norm_after': False, 'batch_var': False, 'out_dir': './weights/', 'log_dir': './log_pos/', 'config_dir': './config/', 'restore': False, 'bash_train': False, 'emb_l2': False, 'lam': 0.1, 'lam_per_epoch': 0.1, 'margin': 0.9, 'negative_weight': 150, 'loss_fn': 'Pos_DROLoss', 'sampling_method': 'no_sample', 'load_name': 'uniform', 'generate_mode': 'no_cosine', 'reweight_period': 5, 'mix_target': 'mix_target', 'mask_distribution': 'mask_distribution', 'neg_alpha': 1.6, 'pos_alpha': 2.0, 'dim_mask': 'both', 'expolation_mask': False, 'mix_replace': False, 'save_emb': False, 'sample_replace': False, 'init_norm': 'uniform', 'init_mean': 2.0, 'init_std': 2.0, 'pop_pow': 1.0, 'save_mle': False, 'l2_mode': 'static', 'temperature_2': 1.2, 'temperature_3': 0.15, 'group_valid': False, 'score_save': 'alpha', 'tau_min': 0.05, 'tau_max': 0.15, 'm': 0.9, 'pow_rate': 0.9, 't_min': 0.05, 't_max': 0.15, 't_epoch': 0.01, 't_patience': 50, 'tau_mode': 'static', 'pos_num': 10, 'beta_1': 10, 'beta_2': 10, 'kl_mode': 'kl', 'lam_bank': False, 'neg_rate': '', 'trans_mode': 'else', 'group_mode': 'equal_pop', 'pos_mode': 'reweight', 'group_mix_mode': 'v1', 'kl_memory_fun': 'v0', 'm_tau': 0.9, 'loss_re': False, 'min_lr': 1e-06, 'cnt_lr': 10, 'group_num': 10, 'w1': 0.9, 'w2': 0.9, 'w3': 0.9, 'w4': 0.9, 'negative_weight2': 0.9, 'gamma': 0.9, 'lambda_': 0.9, 'initial_weight': 0.9, 'ii_neighbor_num': 0.9, 'bool_sigmoid': 1, 'bool_normalized': 1, 'bool_omega': 1, 'lambda_thresh': 10.0, 'lam_epoch': 5, 'add_epoch': 5, 'bool_save': 1, 'lambda_mode': 1, 'pos_prob': 1.0}
+2023-07-29 15:41:56,030 - [INFO] - load train.txt
+2023-07-29 15:42:00,227 - [INFO] - building the adj mat ...
+2023-07-29 15:42:00,838 - [INFO] - train set len is 1237259
+2023-07-29 15:42:00,838 - [INFO] - test set len is 324147
+2023-07-29 15:42:00,838 - [INFO] - loading over ...
+2023-07-29 15:42:00,838 - [INFO] - users are 31668 items are 38048
+2023-07-29 15:42:03,026 - [INFO] - Loading faiss with AVX2 support.
+2023-07-29 15:42:03,026 - [INFO] - Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+2023-07-29 15:42:03,026 - [INFO] - Loading faiss.
+2023-07-29 15:42:03,063 - [INFO] - Successfully loaded faiss.
+2023-07-29 15:42:09,059 - [INFO] - Evaluation Protocols is 1 @ 20
+2023-07-29 15:42:09,059 - [INFO] - start training ...
+2023-07-29 15:42:23,225 - [INFO] - E:0|train_time: 12.45, VALID_time: 1.614, losses:8.028, losses_emb:2.111e-07, best_valid(recall@20): -inf
+valid 	 N@10: 0.04239, R@10: 0.03693, P@10: 0.03324
+valid 	 N@20: 0.05157, R@20: 0.06266, P@20: 0.02833
+valid 	 N@50: 0.07313, R@50: 0.1209, P@50: 0.02204
+
+2023-07-29 15:42:35,613 - [INFO] - E:1|train_time: 10.61, VALID_time: 1.653, losses:7.606, losses_emb:4.055e-07, best_valid(recall@20): 0.06266
+valid 	 N@10: 0.04491, R@10: 0.03894, P@10: 0.03509
+valid 	 N@20: 0.05463, R@20: 0.06608, P@20: 0.02991
+valid 	 N@50: 0.0771, R@50: 0.1269, P@50: 0.02314
+
+2023-07-29 15:42:48,512 - [INFO] - E:2|train_time: 10.89, VALID_time: 1.884, losses:7.521, losses_emb:5.762e-07, best_valid(recall@20): 0.06608
+valid 	 N@10: 0.04606, R@10: 0.03985, P@10: 0.03599
+valid 	 N@20: 0.05598, R@20: 0.06771, P@20: 0.03058
+valid 	 N@50: 0.07894, R@50: 0.1298, P@50: 0.02366
+
