@@ -18,7 +18,8 @@ Commands for reproducing the reported results:
 bash lgn_Frame.sh 1e-3 1e-5 1024 4096 0.15 1.12 0 reweight nodrop Pos_DROLoss yelp2018 3 50 no_cosine no_sample
 ```
 
-Thanks to their simple forms, these losses are implemented in [just a few lines of code in `utils/losses.py.py`](utils/losses.py.py#L429-L432):
+## Documentation
+Thanks to their simple forms, these losses are implemented in just a few lines of code in [`utils/losses.py.py`](utils/losses.py.py#L429-L432):
 ```py
 # bsz : batch size (number of positive pairs)
 # y_pred[:, 0]:  prediction score of postive samples, shape=[bsz]
