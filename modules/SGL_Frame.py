@@ -82,6 +82,8 @@ class sgl_frame(nn.Module):
 
         self.drop_ratio = args_config.w1
         self.ssl_tau = args_config.temperature
+        self.temperature_2 = args_config.temperature_2
+        self.temperature_3 = args_config.temperature_3
         self.reg_weight = args_config.l2
         self.ssl_weight = args_config.w2
 
@@ -281,7 +283,7 @@ class sgl_frame(nn.Module):
         v1 = torch.sum(u_emd1 * u_emd2, dim=1)
         v2 = u_emd1.matmul(all_user2.T)
         v1 = torch.exp(v1 / self.ssl_tau)
-        v2 = torch.sum(torch.exp(v2 / self.ssl_tau), dim=1)
+        v2 = torch.pow(torch.sum(torch.exp(v2 / self.ssl_tau), dim=1), self.temperature_2)
         ssl_user = -torch.sum(torch.log(v1 / v2))
 
         i_emd1 = F.normalize(item_sub1[pos_item_list], dim=1)
@@ -290,7 +292,7 @@ class sgl_frame(nn.Module):
         v3 = torch.sum(i_emd1 * i_emd2, dim=1)
         v4 = i_emd1.matmul(all_item2.T)
         v3 = torch.exp(v3 / self.ssl_tau)
-        v4 = torch.sum(torch.exp(v4 / self.ssl_tau), dim=1)
+        v4 = torch.pow(torch.sum(torch.exp(v4 / self.ssl_tau), dim=1), self.temperature_3)
         ssl_item = -torch.sum(torch.log(v3 / v4))
 
         return (ssl_item + ssl_user) * self.ssl_weight

@@ -48,12 +48,12 @@ def batch_softmax_loss(user_emb, item_emb, temperature):
     return torch.mean(loss)
 
 
-def InfoNCE(view1, view2, temperature):
+def InfoNCE(view1, view2, temperature, temperature_2):
     view1, view2 = F.normalize(view1, dim=1), F.normalize(view2, dim=1)
     pos_score = (view1 * view2).sum(dim=-1)
     pos_score = torch.exp(pos_score / temperature)
     ttl_score = torch.matmul(view1, view2.transpose(0, 1))
-    ttl_score = torch.exp(ttl_score / temperature).sum(dim=1)
+    ttl_score = torch.pow(torch.exp(ttl_score / temperature).sum(dim=1), temperature_2)
     cl_loss = -torch.log(pos_score / ttl_score)
     return torch.mean(cl_loss)
 
@@ -117,6 +117,7 @@ class simsgl_frame(nn.Module):
         self.cl_rate = args_config.w1
         self.eps = args_config.w2
         self.reg = args_config.l2
+        self.temperature_2 = args_config.temperature_2
 
         self.logger = logger
         self._init_weight()
@@ -175,8 +176,8 @@ class simsgl_frame(nn.Module):
         ego_embeddings = torch.cat([self.user_embed, self.item_embed], 0)
         user_view_1, item_view_1 = self.model_enc(ego_embeddings, perturbed=True)
         user_view_2, item_view_2 = self.model_enc(ego_embeddings, perturbed=True)
-        user_cl_loss = InfoNCE(user_view_1[u_idx], user_view_2[u_idx], 0.2)
-        item_cl_loss = InfoNCE(item_view_1[i_idx], item_view_2[i_idx], 0.2)
+        user_cl_loss = InfoNCE(user_view_1[u_idx], user_view_2[u_idx], 0.2, self.temperature_2)
+        item_cl_loss = InfoNCE(item_view_1[i_idx], item_view_2[i_idx], 0.2, self.temperature_2)
         return user_cl_loss + item_cl_loss
 
     def generate(self, mode='test', split=True):
