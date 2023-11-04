@@ -117,6 +117,8 @@ class simsgl_frame_bsl(nn.Module):
         self.cl_rate = args_config.w1
         self.eps = args_config.w2
         self.reg = args_config.l2
+        self.generate_mode= args_config.generate_mode
+        self.sampling_method = args_config.sampling_method
 
         self.logger = logger
         self._init_weight()
@@ -124,6 +126,7 @@ class simsgl_frame_bsl(nn.Module):
         self.item_embed = nn.Parameter(self.item_embed)
         # self.gcn = self._init_model()
         self.model_enc = SimGCL_Encoder(self.sparse_norm_adj, self.emb_size, self.eps, self.n_layers, self.n_users, self.n_items)
+        self.temperature_1 = args_config.temperature
         self.temperature_2 = args_config.temperature_2
         self.temperature_3 = args_config.temperature_3
         self.mode = args_config.pos_mode
@@ -155,17 +158,45 @@ class simsgl_frame_bsl(nn.Module):
         ego_embeddings = torch.cat([self.user_embed, self.item_embed], 0)
         rec_user_emb, rec_item_emb = self.model_enc(ego_embeddings)
 
-        user_emb, pos_item_emb = rec_user_emb[user_list], rec_item_emb[pos_item_list]
-        rec_loss = self.calc_bpr_loss(user_emb, pos_item_emb, user_list)
+        # user_emb, pos_item_emb = rec_user_emb[user_list], rec_item_emb[pos_item_list]
+        if self.sampling_method.startswith("uniform") or self.sampling_method == "neg":
+            neg_item_list = batch['neg_items']
+            rec_loss, _ = self.calc_bpr_loss_(rec_user_emb, rec_item_emb, user_list, pos_item_list, neg_item_list)
+        else:    
+            rec_loss, _ = self.calc_bpr_loss(rec_user_emb, rec_item_emb, user_list, pos_item_list)
         cl_loss = self.cl_rate * self.cal_cl_loss([user_list, pos_item_list])
         batch_loss = rec_loss + cl_loss
         return batch_loss, cl_loss, 0.
 
-    def calc_bpr_loss(self, user_emd, item_emd, user_list):
-        batch_size = user_emd.size(0)
+    def calc_bpr_loss_(self, user_emd, item_emd, user_list, pos_item_list, neg_item_list):
+        batch_size = user_list.size(0)
+        u_e = user_emd[user_list]
+        pos_e = item_emd[pos_item_list]
+        neg_e = item_emd[neg_item_list]
    
-        u_e = F.normalize(user_emd, dim=-1)
-        pos_e = F.normalize(item_emd, dim=-1)
+        item_e = torch.cat([pos_e.unsqueeze(1), neg_e], dim=1) # [B, M+1, F]
+        u_e = F.normalize(u_e, dim=-1)
+        item_e = F.normalize(item_e, dim=-1)
+
+        y_pred = torch.bmm(item_e, u_e.unsqueeze(-1)).squeeze(-1) # [B M+1]
+
+        if self.loss_name == "Pos_DROLoss":
+            loss, neg_rate = self.loss_fn(y_pred, user_list)
+        # cul regularizer
+        regularize = (torch.norm(user_emd[user_list]) ** 2
+                       + torch.norm(item_emd[pos_item_list]) ** 2
+                       + torch.norm(item_emd[neg_item_list]) ** 2) / 2  # take hop=0
+        emb_loss = self.reg * regularize / batch_size
+
+        return loss + emb_loss, emb_loss
+    
+    def calc_bpr_loss(self, user_emd, item_emd, user_list, pos_item_list):
+        batch_size = user_list.size(0)
+        user_emd_ = user_emd[user_list]
+        item_emd_ = item_emd[pos_item_list]
+   
+        u_e = F.normalize(user_emd_, dim=-1)
+        pos_e = F.normalize(item_emd_, dim=-1)
         # ipdb.set_trace()
         # contrust y_pred framework
         row_swap = torch.cat([torch.arange(batch_size).long(), torch.arange(batch_size).long()]).to(self.device)
@@ -177,11 +208,11 @@ class simsgl_frame_bsl(nn.Module):
         if self.loss_name == "Pos_DROLoss":
             loss, neg_rate = self.loss_fn(y_pred, user_list)
         # cul regularizer
-        regularize = (torch.norm(user_emd[:, :]) ** 2
-                       + torch.norm(item_emd[:, :]) ** 2) / 2  # take hop=0
+        regularize = (torch.norm(user_emd_[:, :]) ** 2
+                       + torch.norm(item_emd_[:, :]) ** 2) / 2  # take hop=0
         emb_loss = self.reg * regularize / batch_size
 
-        return loss + emb_loss
+        return loss + emb_loss, emb_loss
 
     def pooling(self, embeddings):
         return embeddings.mean(dim=-2)
@@ -191,8 +222,8 @@ class simsgl_frame_bsl(nn.Module):
         ego_embeddings = torch.cat([self.user_embed, self.item_embed], 0)
         user_view_1, item_view_1 = self.model_enc(ego_embeddings, perturbed=True)
         user_view_2, item_view_2 = self.model_enc(ego_embeddings, perturbed=True)
-        user_cl_loss = InfoNCE(user_view_1[u_idx], user_view_2[u_idx], 0.2)
-        item_cl_loss = InfoNCE(item_view_1[i_idx], item_view_2[i_idx], 0.2)
+        user_cl_loss = InfoNCE(user_view_1[u_idx], user_view_2[u_idx], self.temperature_1)
+        item_cl_loss = InfoNCE(item_view_1[i_idx], item_view_2[i_idx], self.temperature_1)
         return user_cl_loss + item_cl_loss
 
 
@@ -202,6 +233,9 @@ class simsgl_frame_bsl(nn.Module):
         # user_gcn_emb, item_gcn_emb = self.pooling(user_gcn_emb), self.pooling(item_gcn_emb)
         ego_embeddings = torch.cat([self.user_embed, self.item_embed], 0)
         user_gcn_emb, item_gcn_emb = self.model_enc(ego_embeddings)
+        if self.generate_mode == "cosine":
+            user_gcn_emb = F.normalize(user_gcn_emb, dim=-1)
+            item_gcn_emb = F.normalize(item_gcn_emb, dim=-1)
         if split:
             return user_gcn_emb, item_gcn_emb
         else:

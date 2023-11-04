@@ -309,8 +309,42 @@ def load_data(model_args, logger):
         train_cf, user_dict, sp_matrix, n_params, norm_mat, valid_pre, test_pre, None
     elif args.gnn == "ncl_frame":
         return train_cf, user_dict, sp_matrix, n_params, norm_mat, valid_pre, test_pre, train_sp_mat.tocoo()
+    elif args.gnn == "lightgcl_frame":
+        device = torch.device("cuda:0") if args.cuda else torch.device("cpu")
+        # normalizing the adj matrix
+        train = train_sp_mat.tocoo()
+        rowD = np.array(train.sum(1)).squeeze()
+        colD = np.array(train.sum(0)).squeeze()
+        for i in range(len(train.data)):
+            train.data[i] = train.data[i] / pow(rowD[train.row[i]]*colD[train.col[i]], 0.5)
+
+        # construct data loader
+        train = train.tocoo()
+
+        adj_norm = scipy_sparse_mat_to_torch_sparse_tensor(train)
+        adj_norm = adj_norm.coalesce().cuda(torch.device(device))
+        print('Adj matrix normalized.')
+
+        # perform svd reconstruction
+        adj = scipy_sparse_mat_to_torch_sparse_tensor(train).coalesce().cuda(torch.device(device))
+        print('Performing SVD...')
+        svd_u,s,svd_v = torch.svd_lowrank(adj, q=5)
+        u_mul_s = svd_u @ (torch.diag(s))
+        v_mul_s = svd_v @ (torch.diag(s))
+        del s
+        print('SVD done.')
+        data_gcl = (u_mul_s, v_mul_s, svd_u.T, svd_v.T, adj_norm)
+        return train_cf, user_dict, sp_matrix, n_params, norm_mat, valid_pre, test_pre, data_gcl
     return train_cf, user_dict, sp_matrix, n_params, norm_mat, valid_pre, test_pre, None
 # START Ultra
+
+def scipy_sparse_mat_to_torch_sparse_tensor(sparse_mx):
+    sparse_mx = sparse_mx.tocoo().astype(np.float32)
+    indices = torch.from_numpy(
+        np.vstack((sparse_mx.row, sparse_mx.col)).astype(np.int64))
+    values = torch.from_numpy(sparse_mx.data)
+    shape = torch.Size(sparse_mx.shape)
+    return torch.sparse.FloatTensor(indices, values, shape)
 
 def pload(path):
 	with open(path, 'rb') as f:

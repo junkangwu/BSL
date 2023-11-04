@@ -118,6 +118,7 @@ class simsgl_frame(nn.Module):
         self.eps = args_config.w2
         self.reg = args_config.l2
         self.temperature_2 = args_config.temperature_2
+        self.temperature_3 = args_config.temperature_3
 
         self.logger = logger
         self._init_weight()
@@ -177,7 +178,7 @@ class simsgl_frame(nn.Module):
         user_view_1, item_view_1 = self.model_enc(ego_embeddings, perturbed=True)
         user_view_2, item_view_2 = self.model_enc(ego_embeddings, perturbed=True)
         user_cl_loss = InfoNCE(user_view_1[u_idx], user_view_2[u_idx], 0.2, self.temperature_2)
-        item_cl_loss = InfoNCE(item_view_1[i_idx], item_view_2[i_idx], 0.2, self.temperature_2)
+        item_cl_loss = InfoNCE(item_view_1[i_idx], item_view_2[i_idx], 0.2, self.temperature_3)
         return user_cl_loss + item_cl_loss
 
     def generate(self, mode='test', split=True):

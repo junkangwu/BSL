@@ -35,7 +35,7 @@ def parse_args():
 
     parser.add_argument("--cuda", type=bool, default=True, help="use gpu or not")
     parser.add_argument("--gpu_id", type=int, default=2, help="gpu id")
-    parser.add_argument('--Ks', nargs='?', default='[10, 20, 50]',
+    parser.add_argument('--Ks', nargs='?', default='[5, 10, 15, 20]',
                         help='Output sizes of every layer')
     parser.add_argument('--test_flag', nargs='?', default='part',
                         help='Specify the test type from {part, full}, indicating whether the reference is done in mini-batch')
@@ -113,7 +113,7 @@ def parse_args():
     parser.add_argument('--kl_mode', type=str, default="kl", help='Restore from the previously saved model')
     parser.add_argument('--lam_bank', dest='lam_bank', action='store_true', help='Restore from the previously saved model')
     parser.add_argument('--neg_rate', type=str, default="", help='t_patience')
-    parser.add_argument('--trans_mode', type=str, default="minmax", help='t_patience')
+    parser.add_argument('--trans_mode', type=str, default="else", help='t_patience')
     parser.add_argument('--group_mode', type=str, default="equal_pop", help='t_patience')
     parser.add_argument('--pos_mode', type=str, default="multi", help='t_patience')
     parser.add_argument('--group_mix_mode', type=str, default="v1", help='tau_memory_func')

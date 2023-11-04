@@ -309,6 +309,7 @@ if __name__ == '__main__':
     from modules.MF_Frame_align import mf_frame_align
     from modules.SGL_Frame_bsl import sgl_frame_bsl
     from modules.SimSGL_Frame_bsl import simsgl_frame_bsl
+    # from modules.LightGCL_Frame import lightgcl_frame
     if args.gnn == 'mf_simplex':
         model = MF(n_params, args, norm_mat, logger).to(device)
     elif args.gnn == "lgn":
@@ -349,6 +350,8 @@ if __name__ == '__main__':
         model = simsgl_frame(n_params, args, norm_mat, item_group_idx, logger, len(train_cf)).to(device)
     elif args.gnn == "simsgl_frame_bsl":
         model = simsgl_frame_bsl(n_params, args, norm_mat, item_group_idx, logger, len(train_cf)).to(device)
+    # elif args.gnn == "lightgcl_frame":
+    #     model = lightgcl_frame(n_params, args, norm_mat, item_group_idx, logger, len(train_cf)).to(device)
     else:
         raise NotImplementedError
     """define optimizer"""
@@ -405,8 +408,7 @@ if __name__ == '__main__':
                                     args.sampling_method,
                                     n_negs)
                 loss, emb_loss, neg_rate = model(batch)
-                # uniform_scores.append(neg_rate[0].item())
-                # aligh_scores.append(neg_rate[1].item())
+
                 if args.loss_fn == "DCL_Loss":
                     neg_rate_np.append(neg_rate.item())
                 if args.gnn == "dro_frame" and epoch > 20:
@@ -447,17 +449,9 @@ if __name__ == '__main__':
                 loss += loss.item()
                 s += args.batch_size
 
-                # neg_pred = neg_pred.half().cpu().detach().numpy()
-                # # save
-                # dir_save = "./scores/{}".format(args.name)
-                # if not os.path.exists(dir_save):
-                #     os.makedirs(dir_save)
-                # scores_save_path = osp.join(dir_save, "predict_{}.npy".format(epoch))
-                # np.save(scores_save_path, neg_pred)
             if args.gnn == "mf_frame_align":
                 logger.info("Align score\tUniform score\t:{}\t{}".format(np.mean(aligh_scores), np.mean(uniform_scores)))
-            # logger.info(np.mean(uniform_scores))
-            # logger.info(np.mean(aligh_scores))
+
             if args.gnn == "dro_frame" and epoch > 20:
                 neg_rate_np = torch.cat(neg_rate_np, dim=0)
                 logger.info("Tau min: {:.4} max: {:.4}".format(neg_rate_np.min(), neg_rate_np.max()))

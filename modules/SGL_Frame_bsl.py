@@ -87,6 +87,8 @@ class sgl_frame_bsl(nn.Module):
         self.mode = args_config.pos_mode
         self.reg_weight = args_config.l2
         self.ssl_weight = args_config.w2
+        self.generate_mode= args_config.generate_mode
+        self.sampling_method = args_config.sampling_method
 
         self.user_embedding = torch.nn.Embedding(self.n_users, self.embed_dim)
         self.item_embedding = torch.nn.Embedding(self.n_items, self.embed_dim)
@@ -231,11 +233,37 @@ class sgl_frame_bsl(nn.Module):
         user_emd, item_emd = self.forward_embed(self.train_graph)
         user_sub1, item_sub1 = self.forward_embed(self.sub_graph1)
         user_sub2, item_sub2 = self.forward_embed(self.sub_graph2)
-        bpr_loss, l2_loss = self.calc_bpr_loss(user_emd,item_emd,user_list,pos_item_list)
+        if self.sampling_method.startswith("uniform") or self.sampling_method == "neg":
+            neg_item_list = batch['neg_items']
+            bpr_loss, l2_loss = self.calc_bpr_loss_(user_emd,item_emd,user_list,pos_item_list, neg_item_list)
+        else:
+            bpr_loss, l2_loss = self.calc_bpr_loss(user_emd,item_emd,user_list,pos_item_list)
         ssl_loss = self.calc_ssl_loss(user_list,pos_item_list,user_sub1,user_sub2,item_sub1,item_sub2)
 
         return bpr_loss + ssl_loss, l2_loss, 0.
 
+    def calc_bpr_loss_(self, user_emd, item_emd, user_list, pos_item_list, neg_item_list):
+        batch_size = user_list.size(0)
+        u_e = user_emd[user_list]
+        pos_e = item_emd[pos_item_list]
+        neg_e = item_emd[neg_item_list]
+   
+        item_e = torch.cat([pos_e.unsqueeze(1), neg_e], dim=1) # [B, M+1, F]
+        u_e = F.normalize(u_e, dim=-1)
+        item_e = F.normalize(item_e, dim=-1)
+
+        y_pred = torch.bmm(item_e, u_e.unsqueeze(-1)).squeeze(-1) # [B M+1]
+
+        if self.loss_name == "Pos_DROLoss":
+            loss, neg_rate = self.loss_fn(y_pred, user_list)
+        # cul regularizer
+        regularize = (torch.norm(user_emd[user_list]) ** 2
+                       + torch.norm(item_emd[pos_item_list]) ** 2
+                       + torch.norm(item_emd[neg_item_list]) ** 2) / 2  # take hop=0
+        emb_loss = self.reg_weight * regularize / batch_size
+
+        return loss + emb_loss, emb_loss
+    
     def calc_bpr_loss(self, user_emd, item_emd, user_list, pos_item_list):
         batch_size = user_list.size(0)
         user_emd_ = user_emd[user_list]
@@ -298,6 +326,9 @@ class sgl_frame_bsl(nn.Module):
 
     def generate(self, mode='test', split=True):
         user_gcn_emb, item_gcn_emb = self.forward_embed(self.train_graph)
+        if self.generate_mode == "cosine":
+            user_gcn_emb = F.normalize(user_gcn_emb, dim=-1)
+            item_gcn_emb = F.normalize(item_gcn_emb, dim=-1)
 
         if split:
             return user_gcn_emb, item_gcn_emb
