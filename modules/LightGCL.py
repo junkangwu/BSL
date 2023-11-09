@@ -27,9 +27,12 @@ import scipy.sparse as sp
 class lightgcl_frame(nn.Module):
     def __init__(self, data_config, args_config, adj_mat, item_group_idx=None, logger=None, train_cf_len=None):
         super(lightgcl_frame, self).__init__()
-        self._init_weight()
-        self.E_u_0 = nn.Parameter(self.user_embed)
-        self.E_i_0 = nn.Parameter(self.item_embed)
+        # self._init_weight()
+        self.n_users = data_config['n_users']
+        self.n_items = data_config['n_items']
+        self.emb_size = args_config.dim
+        self.E_u_0 = nn.Parameter(nn.init.xavier_uniform_(torch.empty(self.n_users, self.emb_size)))
+        self.E_i_0 = nn.Parameter(nn.init.xavier_uniform_(torch.empty(self.n_items, self.emb_size)))
         u_mul_s, v_mul_s, ut, vt, adj_norm = item_group_idx
         # self.train_csr = train_csr
         self.adj_norm = adj_norm
@@ -65,9 +68,9 @@ class lightgcl_frame(nn.Module):
 
     def forward(self, batch, step=0):
         uids, pos, neg = batch['users'], batch['pos_items'], batch['neg_items']
-        uids = uids.long().cuda(torch.device(device))
-        pos = pos.long().cuda(torch.device(device))
-        neg = neg.long().cuda(torch.device(device))
+        uids = uids.long().to(self.device)
+        pos = pos.long().to(self.device)
+        neg = neg.long().to(self.device).squeeze(-1)
         iids = torch.concat([pos, neg], dim=0)
 
         for layer in range(1,self.l+1):
@@ -91,7 +94,6 @@ class lightgcl_frame(nn.Module):
         # aggregate across layers
         self.E_u = sum(self.E_u_list)
         self.E_i = sum(self.E_i_list)
-
         # cl loss
         G_u_norm = self.G_u
         E_u_norm = self.E_u
@@ -121,11 +123,6 @@ class lightgcl_frame(nn.Module):
         #print('loss',loss.item(),'loss_r',loss_r.item(),'loss_s',loss_s.item())
         return loss, loss_r, self.lambda_1 * loss_s
     
-    def _init_weight(self):
-        initializer = nn.init.xavier_uniform_
-        self.E_u_0 = initializer(torch.empty(self.n_users, self.emb_size))
-        self.E_i_0 = initializer(torch.empty(self.n_items, self.emb_size))
-
     def generate(self, mode='test', split=True):
         user_gcn_emb, item_gcn_emb = self.E_u, self.E_i
         if split:
@@ -135,3 +132,11 @@ class lightgcl_frame(nn.Module):
 
     def rating(self, u_g_embeddings=None, i_g_embeddings=None):
         return torch.matmul(u_g_embeddings, i_g_embeddings.t())
+
+def sparse_dropout(mat, dropout):
+    if dropout == 0.0:
+        return mat
+    indices = mat.indices()
+    values = nn.functional.dropout(mat.values(), p=dropout)
+    size = mat.size()
+    return torch.sparse.FloatTensor(indices, values, size)

@@ -309,7 +309,8 @@ if __name__ == '__main__':
     from modules.MF_Frame_align import mf_frame_align
     from modules.SGL_Frame_bsl import sgl_frame_bsl
     from modules.SimSGL_Frame_bsl import simsgl_frame_bsl
-    # from modules.LightGCL_Frame import lightgcl_frame
+    from modules.LightGCL import lightgcl_frame
+    from modules.LightGCL_bsl import lightgcl_frame_bsl
     if args.gnn == 'mf_simplex':
         model = MF(n_params, args, norm_mat, logger).to(device)
     elif args.gnn == "lgn":
@@ -350,8 +351,10 @@ if __name__ == '__main__':
         model = simsgl_frame(n_params, args, norm_mat, item_group_idx, logger, len(train_cf)).to(device)
     elif args.gnn == "simsgl_frame_bsl":
         model = simsgl_frame_bsl(n_params, args, norm_mat, item_group_idx, logger, len(train_cf)).to(device)
-    # elif args.gnn == "lightgcl_frame":
-    #     model = lightgcl_frame(n_params, args, norm_mat, item_group_idx, logger, len(train_cf)).to(device)
+    elif args.gnn == "lightgcl_frame":
+        model = lightgcl_frame(n_params, args, norm_mat, item_group_idx, logger, len(train_cf)).to(device)
+    elif args.gnn == "lightgcl_frame_bsl":
+        model = lightgcl_frame_bsl(n_params, args, norm_mat, item_group_idx, logger, len(train_cf)).to(device)
     else:
         raise NotImplementedError
     """define optimizer"""

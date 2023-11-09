@@ -173,7 +173,12 @@ def load_data(model_args, logger):
         read_cf = read_cf_amazon
 
     # read_cf = read_cf_yelp2018
-    train_cf = read_cf(directory + 'train{}.txt'.format(args.neg_rate))
+    print(args.neg_rate)
+    if args.neg_rate == "_0.":
+        print("neg_rate is 0!!!")
+        train_cf = read_cf(directory + 'train.txt')
+    else:
+        train_cf = read_cf(directory + 'train{}.txt'.format(args.neg_rate))
     logger.info("load train{}.txt".format(args.neg_rate))
     test_cf = read_cf(directory + 'test.txt')
     if dataset == 'yelp2018' or dataset == "amazon-book" or dataset == "gowalla" or dataset == 'ml' or dataset == "citeulike-new":
@@ -309,7 +314,7 @@ def load_data(model_args, logger):
         train_cf, user_dict, sp_matrix, n_params, norm_mat, valid_pre, test_pre, None
     elif args.gnn == "ncl_frame":
         return train_cf, user_dict, sp_matrix, n_params, norm_mat, valid_pre, test_pre, train_sp_mat.tocoo()
-    elif args.gnn == "lightgcl_frame":
+    elif args.gnn.startswith("lightgcl_frame"):
         device = torch.device("cuda:0") if args.cuda else torch.device("cpu")
         # normalizing the adj matrix
         train = train_sp_mat.tocoo()
