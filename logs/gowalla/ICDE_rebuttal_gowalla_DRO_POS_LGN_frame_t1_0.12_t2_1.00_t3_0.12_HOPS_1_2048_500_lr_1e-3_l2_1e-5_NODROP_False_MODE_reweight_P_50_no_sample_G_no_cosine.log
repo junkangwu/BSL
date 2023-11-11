@@ -1,0 +1,1232 @@
+2023-11-04 12:39:30,938 - [INFO] - {'dataset': 'gowalla', 'data_path': './data/', 'name': 'ICDE_rebuttal_gowalla_DRO_POS_LGN_frame_t1_0.12_t2_1.00_t3_0.12_HOPS_1_2048_500_lr_1e-3_l2_1e-5_NODROP_False_MODE_reweight_P_50_no_sample_G_no_cosine_04_11_2023_12:39:30', 'train_ratio': 0.8, 'gnn': 'lgn_frame', 'epoch': 1000, 'batch_size': 2048, 'test_batch_size': 2048, 'dim': 64, 'l2': 1e-05, 'lr': 0.001, 'mess_dropout': False, 'mess_dropout_rate': 0.1, 'edge_dropout': False, 'edge_dropout_rate': 0.1, 'batch_test_flag': True, 'ns': 'mixgcf', 'K': 1, 'n_negs': 500, 'pool': 'mean', 'cuda': True, 'gpu_id': 0, 'Ks': '[5, 10, 15, 20]', 'test_flag': 'part', 'context_hops': 1, 'eval_earlystop': 'recall@20', 'tau_plus': 0.1, 'temperature': 0.12, 'beta': 1.0, 'sample_num': 2048, 's_neg': 64, 's_pos': 64, 'norm_change': False, 'norm_path': None, 'u_norm': True, 'i_norm': True, 'alpha': 0.1, 'save': False, 'save_analyses': False, 'log_hard_rate': False, 'norm_before': False, 'norm_after': False, 'batch_var': False, 'out_dir': './weights/', 'log_dir': './log_pos/', 'config_dir': './config/', 'restore': False, 'bash_train': False, 'emb_l2': False, 'lam': 0.1, 'lam_per_epoch': 0.1, 'margin': 0.9, 'negative_weight': 150, 'loss_fn': 'Pos_DROLoss', 'sampling_method': 'no_sample', 'load_name': 'uniform', 'generate_mode': 'no_cosine', 'reweight_period': 5, 'mix_target': 'mix_target', 'mask_distribution': 'mask_distribution', 'neg_alpha': 1.6, 'pos_alpha': 2.0, 'dim_mask': 'both', 'expolation_mask': False, 'mix_replace': False, 'save_emb': False, 'sample_replace': False, 'init_norm': 'uniform', 'init_mean': 2.0, 'init_std': 2.0, 'pop_pow': 1.0, 'save_mle': False, 'l2_mode': 'static', 'temperature_2': 1.0, 'temperature_3': 0.12, 'group_valid': False, 'score_save': 'alpha', 'tau_min': 0.05, 'tau_max': 0.15, 'm': 0.9, 'pow_rate': 0.9, 't_min': 0.05, 't_max': 0.15, 't_epoch': 0.01, 't_patience': 50, 'tau_mode': 'static', 'pos_num': 10, 'beta_1': 10, 'beta_2': 10, 'kl_mode': 'kl', 'lam_bank': False, 'neg_rate': '', 'trans_mode': 'else', 'group_mode': 'equal_pop', 'pos_mode': 'reweight', 'group_mix_mode': 'v1', 'kl_memory_fun': 'v0', 'm_tau': 0.9, 'loss_re': False, 'min_lr': 1e-06, 'cnt_lr': 10, 'group_num': 10, 'w1': 0.9, 'w2': 0.9, 'w3': 0.9, 'w4': 0.9, 'negative_weight2': 0.9, 'gamma': 0.9, 'lambda_': 0.9, 'initial_weight': 0.9, 'ii_neighbor_num': 0.9, 'bool_sigmoid': 1, 'bool_normalized': 1, 'bool_omega': 1, 'lambda_thresh': 10.0, 'lam_epoch': 5, 'add_epoch': 5, 'bool_save': 1, 'lambda_mode': 1, 'pos_prob': 1.0}
+2023-11-04 12:39:32,480 - [INFO] - load train.txt
+2023-11-04 12:39:35,721 - [INFO] - building the adj mat ...
+2023-11-04 12:39:36,352 - [INFO] - train set len is 810128
+2023-11-04 12:39:36,353 - [INFO] - test set len is 217242
+2023-11-04 12:39:36,353 - [INFO] - loading over ...
+2023-11-04 12:39:36,353 - [INFO] - users are 29858 items are 40981
+Here is Pos_DROLoss loss
+tau_1	tau_2 tau_3 	 is 0.12	1.0	 0.12 loss_re False MODE reweight
+sample method is no_sample
+2023-11-04 12:39:43,240 - [INFO] - Evaluation Protocols is 1 @ 20
+2023-11-04 12:39:43,240 - [INFO] - start training ...
+2023-11-04 12:39:50,671 - [INFO] - E:0|train_time: 6.388, VALID_time: 0.9954, losses:5.034, losses_emb:2.325e-07, best_valid(recall@20): -inf
+valid 	 N@5: 0.1094, R@5: 0.07138, P@5: 0.08442
+valid 	 N@10: 0.1121, R@10: 0.1048, P@10: 0.06261
+valid 	 N@15: 0.1192, R@15: 0.1306, P@15: 0.05201
+valid 	 N@20: 0.1255, R@20: 0.1507, P@20: 0.04528
+
+2023-11-04 12:39:56,352 - [INFO] - E:1|train_time: 4.826, VALID_time: 0.7832, losses:4.277, losses_emb:4.64e-07, best_valid(recall@20): 0.1507
+valid 	 N@5: 0.1168, R@5: 0.07673, P@5: 0.09067
+valid 	 N@10: 0.1196, R@10: 0.112, P@10: 0.06694
+valid 	 N@15: 0.1274, R@15: 0.1398, P@15: 0.0558
+valid 	 N@20: 0.1344, R@20: 0.1619, P@20: 0.04866
+
+2023-11-04 12:40:02,139 - [INFO] - E:2|train_time: 4.764, VALID_time: 0.9294, losses:4.143, losses_emb:6.726e-07, best_valid(recall@20): 0.1619
+valid 	 N@5: 0.1219, R@5: 0.0799, P@5: 0.09469
+valid 	 N@10: 0.1241, R@10: 0.1156, P@10: 0.06927
+valid 	 N@15: 0.1316, R@15: 0.1429, P@15: 0.05753
+valid 	 N@20: 0.1392, R@20: 0.1667, P@20: 0.05046
+
+2023-11-04 12:40:07,863 - [INFO] - E:3|train_time: 4.825, VALID_time: 0.8366, losses:4.076, losses_emb:8.858e-07, best_valid(recall@20): 0.1667
+valid 	 N@5: 0.1239, R@5: 0.08122, P@5: 0.09654
+valid 	 N@10: 0.1263, R@10: 0.1177, P@10: 0.07084
+valid 	 N@15: 0.1339, R@15: 0.1458, P@15: 0.05879
+valid 	 N@20: 0.1416, R@20: 0.1702, P@20: 0.05146
+
+2023-11-04 12:40:13,664 - [INFO] - E:4|train_time: 4.869, VALID_time: 0.8651, losses:4.036, losses_emb:1.106e-06, best_valid(recall@20): 0.1702
+valid 	 N@5: 0.1259, R@5: 0.08228, P@5: 0.09792
+valid 	 N@10: 0.1283, R@10: 0.1194, P@10: 0.0718
+valid 	 N@15: 0.1361, R@15: 0.1479, P@15: 0.05956
+valid 	 N@20: 0.1437, R@20: 0.172, P@20: 0.05214
+
+2023-11-04 12:40:19,671 - [INFO] - E:5|train_time: 4.915, VALID_time: 0.9892, losses:4.007, losses_emb:1.337e-06, best_valid(recall@20): 0.172
+valid 	 N@5: 0.1277, R@5: 0.08327, P@5: 0.09917
+valid 	 N@10: 0.1301, R@10: 0.121, P@10: 0.07288
+valid 	 N@15: 0.1379, R@15: 0.1498, P@15: 0.06033
+valid 	 N@20: 0.1453, R@20: 0.1735, P@20: 0.05262
+
+2023-11-04 12:40:25,527 - [INFO] - E:6|train_time: 4.888, VALID_time: 0.8833, losses:3.986, losses_emb:1.578e-06, best_valid(recall@20): 0.1735
+valid 	 N@5: 0.1285, R@5: 0.08378, P@5: 0.09977
+valid 	 N@10: 0.1312, R@10: 0.1219, P@10: 0.0735
+valid 	 N@15: 0.1388, R@15: 0.1505, P@15: 0.06075
+valid 	 N@20: 0.1464, R@20: 0.1748, P@20: 0.05307
+
+2023-11-04 12:40:31,381 - [INFO] - E:7|train_time: 4.838, VALID_time: 0.9228, losses:3.969, losses_emb:1.831e-06, best_valid(recall@20): 0.1748
+valid 	 N@5: 0.1295, R@5: 0.08438, P@5: 0.1006
+valid 	 N@10: 0.1321, R@10: 0.1229, P@10: 0.07413
+valid 	 N@15: 0.1398, R@15: 0.1517, P@15: 0.0613
+valid 	 N@20: 0.1475, R@20: 0.176, P@20: 0.05352
+
+2023-11-04 12:40:37,195 - [INFO] - E:8|train_time: 4.797, VALID_time: 0.9306, losses:3.955, losses_emb:2.096e-06, best_valid(recall@20): 0.176
+valid 	 N@5: 0.1304, R@5: 0.08489, P@5: 0.1013
+valid 	 N@10: 0.1331, R@10: 0.1237, P@10: 0.07464
+valid 	 N@15: 0.1412, R@15: 0.1534, P@15: 0.06198
+valid 	 N@20: 0.1487, R@20: 0.1776, P@20: 0.05407
+
+2023-11-04 12:40:43,128 - [INFO] - E:9|train_time: 4.797, VALID_time: 1.046, losses:3.944, losses_emb:2.375e-06, best_valid(recall@20): 0.1776
+valid 	 N@5: 0.1313, R@5: 0.08549, P@5: 0.1019
+valid 	 N@10: 0.134, R@10: 0.1243, P@10: 0.07518
+valid 	 N@15: 0.142, R@15: 0.154, P@15: 0.06232
+valid 	 N@20: 0.1497, R@20: 0.1783, P@20: 0.05439
+
+2023-11-04 12:40:49,098 - [INFO] - E:10|train_time: 4.791, VALID_time: 1.081, losses:3.934, losses_emb:2.665e-06, best_valid(recall@20): 0.1783
+valid 	 N@5: 0.1321, R@5: 0.08583, P@5: 0.1026
+valid 	 N@10: 0.1348, R@10: 0.1251, P@10: 0.07561
+valid 	 N@15: 0.1427, R@15: 0.1544, P@15: 0.06254
+valid 	 N@20: 0.1505, R@20: 0.1794, P@20: 0.05464
+
+2023-11-04 12:40:54,841 - [INFO] - E:11|train_time: 4.759, VALID_time: 0.9102, losses:3.925, losses_emb:2.968e-06, best_valid(recall@20): 0.1794
+valid 	 N@5: 0.1321, R@5: 0.08585, P@5: 0.1026
+valid 	 N@10: 0.1349, R@10: 0.1252, P@10: 0.07568
+valid 	 N@15: 0.1429, R@15: 0.1549, P@15: 0.06272
+valid 	 N@20: 0.1508, R@20: 0.1801, P@20: 0.05487
+
+2023-11-04 12:41:00,608 - [INFO] - E:12|train_time: 4.763, VALID_time: 0.9136, losses:3.918, losses_emb:3.282e-06, best_valid(recall@20): 0.1801
+valid 	 N@5: 0.1328, R@5: 0.08638, P@5: 0.1032
+valid 	 N@10: 0.1353, R@10: 0.1255, P@10: 0.07596
+valid 	 N@15: 0.1433, R@15: 0.1553, P@15: 0.0629
+valid 	 N@20: 0.1512, R@20: 0.1803, P@20: 0.05503
+
+2023-11-04 12:41:06,308 - [INFO] - E:13|train_time: 4.757, VALID_time: 0.8691, losses:3.91, losses_emb:3.609e-06, best_valid(recall@20): 0.1803
+valid 	 N@5: 0.1334, R@5: 0.08714, P@5: 0.1041
+valid 	 N@10: 0.1357, R@10: 0.126, P@10: 0.07637
+valid 	 N@15: 0.1438, R@15: 0.1562, P@15: 0.06322
+valid 	 N@20: 0.1516, R@20: 0.1809, P@20: 0.0552
+
+2023-11-04 12:41:12,119 - [INFO] - E:14|train_time: 4.825, VALID_time: 0.8734, losses:3.903, losses_emb:3.945e-06, best_valid(recall@20): 0.1809
+valid 	 N@5: 0.1338, R@5: 0.08715, P@5: 0.1043
+valid 	 N@10: 0.1363, R@10: 0.1265, P@10: 0.07665
+valid 	 N@15: 0.1441, R@15: 0.156, P@15: 0.06328
+valid 	 N@20: 0.1521, R@20: 0.1814, P@20: 0.05536
+
+2023-11-04 12:41:17,943 - [INFO] - E:15|train_time: 4.804, VALID_time: 0.9386, losses:3.897, losses_emb:4.291e-06, best_valid(recall@20): 0.1814
+valid 	 N@5: 0.1343, R@5: 0.08746, P@5: 0.1047
+valid 	 N@10: 0.1367, R@10: 0.127, P@10: 0.07686
+valid 	 N@15: 0.1446, R@15: 0.1566, P@15: 0.06349
+valid 	 N@20: 0.1526, R@20: 0.1821, P@20: 0.0555
+
+2023-11-04 12:41:23,838 - [INFO] - E:16|train_time: 4.847, VALID_time: 0.9638, losses:3.891, losses_emb:4.644e-06, best_valid(recall@20): 0.1821
+valid 	 N@5: 0.1348, R@5: 0.08772, P@5: 0.1049
+valid 	 N@10: 0.1372, R@10: 0.1272, P@10: 0.07704
+valid 	 N@15: 0.1453, R@15: 0.1575, P@15: 0.06376
+valid 	 N@20: 0.1531, R@20: 0.1826, P@20: 0.05557
+
+2023-11-04 12:41:29,487 - [INFO] - E:17|train_time: 4.773, VALID_time: 0.7902, losses:3.886, losses_emb:5.007e-06, best_valid(recall@20): 0.1826
+valid 	 N@5: 0.1342, R@5: 0.08733, P@5: 0.1044
+valid 	 N@10: 0.1372, R@10: 0.1277, P@10: 0.07721
+valid 	 N@15: 0.1454, R@15: 0.158, P@15: 0.06393
+valid 	 N@20: 0.1531, R@20: 0.1825, P@20: 0.05569
+
+2023-11-04 12:41:35,174 - [INFO] - E:18|train_time: 4.762, VALID_time: 0.8799, losses:3.881, losses_emb:5.378e-06, best_valid(recall@20): 0.1826
+valid 	 N@5: 0.1346, R@5: 0.08765, P@5: 0.105
+valid 	 N@10: 0.1373, R@10: 0.1278, P@10: 0.07717
+valid 	 N@15: 0.1455, R@15: 0.158, P@15: 0.06392
+valid 	 N@20: 0.1532, R@20: 0.1827, P@20: 0.05572
+
+2023-11-04 12:41:41,223 - [INFO] - E:19|train_time: 4.793, VALID_time: 1.178, losses:3.876, losses_emb:5.753e-06, best_valid(recall@20): 0.1827
+valid 	 N@5: 0.135, R@5: 0.08811, P@5: 0.105
+valid 	 N@10: 0.1378, R@10: 0.1282, P@10: 0.07744
+valid 	 N@15: 0.146, R@15: 0.1585, P@15: 0.06414
+valid 	 N@20: 0.1536, R@20: 0.183, P@20: 0.05587
+
+2023-11-04 12:41:47,139 - [INFO] - E:20|train_time: 4.784, VALID_time: 1.062, losses:3.872, losses_emb:6.137e-06, best_valid(recall@20): 0.183
+valid 	 N@5: 0.1351, R@5: 0.08817, P@5: 0.1052
+valid 	 N@10: 0.138, R@10: 0.1284, P@10: 0.07757
+valid 	 N@15: 0.1461, R@15: 0.1583, P@15: 0.06424
+valid 	 N@20: 0.1539, R@20: 0.1834, P@20: 0.05605
+
+2023-11-04 12:41:53,023 - [INFO] - E:21|train_time: 4.793, VALID_time: 1.01, losses:3.867, losses_emb:6.524e-06, best_valid(recall@20): 0.1834
+valid 	 N@5: 0.1353, R@5: 0.08799, P@5: 0.1053
+valid 	 N@10: 0.1381, R@10: 0.1285, P@10: 0.07762
+valid 	 N@15: 0.1464, R@15: 0.1589, P@15: 0.06441
+valid 	 N@20: 0.1541, R@20: 0.1837, P@20: 0.05612
+
+2023-11-04 12:41:58,776 - [INFO] - E:22|train_time: 4.784, VALID_time: 0.8751, losses:3.863, losses_emb:6.917e-06, best_valid(recall@20): 0.1837
+valid 	 N@5: 0.1357, R@5: 0.08854, P@5: 0.1056
+valid 	 N@10: 0.1384, R@10: 0.1286, P@10: 0.07775
+valid 	 N@15: 0.1466, R@15: 0.1589, P@15: 0.06453
+valid 	 N@20: 0.1544, R@20: 0.184, P@20: 0.0562
+
+2023-11-04 12:42:04,535 - [INFO] - E:23|train_time: 4.721, VALID_time: 0.9269, losses:3.86, losses_emb:7.316e-06, best_valid(recall@20): 0.184
+valid 	 N@5: 0.1354, R@5: 0.08835, P@5: 0.1055
+valid 	 N@10: 0.1382, R@10: 0.1286, P@10: 0.07767
+valid 	 N@15: 0.1465, R@15: 0.159, P@15: 0.06459
+valid 	 N@20: 0.1543, R@20: 0.184, P@20: 0.05625
+
+2023-11-04 12:42:10,294 - [INFO] - E:24|train_time: 4.819, VALID_time: 0.8677, losses:3.856, losses_emb:7.717e-06, best_valid(recall@20): 0.184
+valid 	 N@5: 0.136, R@5: 0.08869, P@5: 0.1061
+valid 	 N@10: 0.1385, R@10: 0.1287, P@10: 0.07778
+valid 	 N@15: 0.1468, R@15: 0.1591, P@15: 0.06457
+valid 	 N@20: 0.1546, R@20: 0.1842, P@20: 0.05631
+
+2023-11-04 12:42:16,084 - [INFO] - E:25|train_time: 4.825, VALID_time: 0.8792, losses:3.852, losses_emb:8.122e-06, best_valid(recall@20): 0.1842
+valid 	 N@5: 0.1362, R@5: 0.08891, P@5: 0.1062
+valid 	 N@10: 0.1386, R@10: 0.1287, P@10: 0.07774
+valid 	 N@15: 0.147, R@15: 0.1593, P@15: 0.06472
+valid 	 N@20: 0.1549, R@20: 0.1846, P@20: 0.05639
+
+2023-11-04 12:42:21,869 - [INFO] - E:26|train_time: 4.816, VALID_time: 0.878, losses:3.849, losses_emb:8.53e-06, best_valid(recall@20): 0.1846
+valid 	 N@5: 0.1363, R@5: 0.08911, P@5: 0.1064
+valid 	 N@10: 0.1388, R@10: 0.1291, P@10: 0.07796
+valid 	 N@15: 0.147, R@15: 0.1594, P@15: 0.06466
+valid 	 N@20: 0.1548, R@20: 0.1843, P@20: 0.05633
+
+2023-11-04 12:42:27,730 - [INFO] - E:27|train_time: 4.912, VALID_time: 0.9055, losses:3.846, losses_emb:8.941e-06, best_valid(recall@20): 0.1846
+valid 	 N@5: 0.1357, R@5: 0.08874, P@5: 0.1058
+valid 	 N@10: 0.1387, R@10: 0.1293, P@10: 0.07809
+valid 	 N@15: 0.1469, R@15: 0.1594, P@15: 0.06475
+valid 	 N@20: 0.1548, R@20: 0.1846, P@20: 0.05643
+
+2023-11-04 12:42:33,700 - [INFO] - E:28|train_time: 4.871, VALID_time: 1.017, losses:3.843, losses_emb:9.356e-06, best_valid(recall@20): 0.1846
+valid 	 N@5: 0.1361, R@5: 0.08898, P@5: 0.1063
+valid 	 N@10: 0.1388, R@10: 0.1293, P@10: 0.07813
+valid 	 N@15: 0.1471, R@15: 0.1599, P@15: 0.06484
+valid 	 N@20: 0.155, R@20: 0.185, P@20: 0.05658
+
+2023-11-04 12:42:39,365 - [INFO] - E:29|train_time: 4.827, VALID_time: 0.7527, losses:3.84, losses_emb:9.772e-06, best_valid(recall@20): 0.185
+valid 	 N@5: 0.1363, R@5: 0.08913, P@5: 0.1063
+valid 	 N@10: 0.1388, R@10: 0.1291, P@10: 0.07801
+valid 	 N@15: 0.1472, R@15: 0.1599, P@15: 0.06481
+valid 	 N@20: 0.1549, R@20: 0.1844, P@20: 0.05652
+
+2023-11-04 12:42:45,033 - [INFO] - E:30|train_time: 4.78, VALID_time: 0.8599, losses:3.838, losses_emb:1.019e-05, best_valid(recall@20): 0.185
+valid 	 N@5: 0.1362, R@5: 0.08901, P@5: 0.1065
+valid 	 N@10: 0.1388, R@10: 0.1293, P@10: 0.07805
+valid 	 N@15: 0.1471, R@15: 0.1599, P@15: 0.06481
+valid 	 N@20: 0.1549, R@20: 0.1846, P@20: 0.05657
+
+2023-11-04 12:42:50,858 - [INFO] - E:31|train_time: 4.808, VALID_time: 0.9731, losses:3.835, losses_emb:1.061e-05, best_valid(recall@20): 0.185
+valid 	 N@5: 0.1364, R@5: 0.08913, P@5: 0.1063
+valid 	 N@10: 0.1392, R@10: 0.1297, P@10: 0.07821
+valid 	 N@15: 0.1474, R@15: 0.1599, P@15: 0.06484
+valid 	 N@20: 0.1551, R@20: 0.1846, P@20: 0.0565
+
+2023-11-04 12:42:56,691 - [INFO] - E:32|train_time: 4.872, VALID_time: 0.9056, losses:3.832, losses_emb:1.104e-05, best_valid(recall@20): 0.185
+valid 	 N@5: 0.1365, R@5: 0.08908, P@5: 0.1063
+valid 	 N@10: 0.1395, R@10: 0.1298, P@10: 0.07842
+valid 	 N@15: 0.1477, R@15: 0.1602, P@15: 0.06495
+valid 	 N@20: 0.1554, R@20: 0.1849, P@20: 0.05658
+
+2023-11-04 12:43:02,391 - [INFO] - E:33|train_time: 4.803, VALID_time: 0.854, losses:3.83, losses_emb:1.146e-05, best_valid(recall@20): 0.185
+valid 	 N@5: 0.1363, R@5: 0.08916, P@5: 0.1064
+valid 	 N@10: 0.1393, R@10: 0.1299, P@10: 0.07835
+valid 	 N@15: 0.1475, R@15: 0.1601, P@15: 0.06505
+valid 	 N@20: 0.1552, R@20: 0.1847, P@20: 0.05659
+
+2023-11-04 12:43:08,185 - [INFO] - E:34|train_time: 4.826, VALID_time: 0.9119, losses:3.828, losses_emb:1.189e-05, best_valid(recall@20): 0.185
+valid 	 N@5: 0.1367, R@5: 0.08924, P@5: 0.1067
+valid 	 N@10: 0.1393, R@10: 0.1297, P@10: 0.07831
+valid 	 N@15: 0.1474, R@15: 0.1597, P@15: 0.06484
+valid 	 N@20: 0.1553, R@20: 0.185, P@20: 0.05664
+
+2023-11-04 12:43:13,855 - [INFO] - E:35|train_time: 4.766, VALID_time: 0.8585, losses:3.826, losses_emb:1.232e-05, best_valid(recall@20): 0.185
+valid 	 N@5: 0.1366, R@5: 0.0892, P@5: 0.1065
+valid 	 N@10: 0.1394, R@10: 0.1299, P@10: 0.07835
+valid 	 N@15: 0.1476, R@15: 0.1602, P@15: 0.06497
+valid 	 N@20: 0.1554, R@20: 0.1851, P@20: 0.05667
+
+2023-11-04 12:43:19,525 - [INFO] - E:36|train_time: 4.777, VALID_time: 0.8175, losses:3.824, losses_emb:1.275e-05, best_valid(recall@20): 0.1851
+valid 	 N@5: 0.1366, R@5: 0.08952, P@5: 0.1067
+valid 	 N@10: 0.1393, R@10: 0.13, P@10: 0.07832
+valid 	 N@15: 0.1477, R@15: 0.1605, P@15: 0.06516
+valid 	 N@20: 0.1553, R@20: 0.185, P@20: 0.05664
+
+2023-11-04 12:43:25,221 - [INFO] - E:37|train_time: 4.79, VALID_time: 0.8556, losses:3.822, losses_emb:1.318e-05, best_valid(recall@20): 0.1851
+valid 	 N@5: 0.1371, R@5: 0.08983, P@5: 0.107
+valid 	 N@10: 0.1397, R@10: 0.1302, P@10: 0.07846
+valid 	 N@15: 0.1479, R@15: 0.1605, P@15: 0.0652
+valid 	 N@20: 0.1556, R@20: 0.1854, P@20: 0.05671
+
+2023-11-04 12:43:30,942 - [INFO] - E:38|train_time: 4.766, VALID_time: 0.8697, losses:3.82, losses_emb:1.361e-05, best_valid(recall@20): 0.1854
+valid 	 N@5: 0.1367, R@5: 0.08935, P@5: 0.1067
+valid 	 N@10: 0.1395, R@10: 0.13, P@10: 0.07849
+valid 	 N@15: 0.1477, R@15: 0.1603, P@15: 0.06512
+valid 	 N@20: 0.1554, R@20: 0.185, P@20: 0.05673
+
+2023-11-04 12:43:36,717 - [INFO] - E:39|train_time: 4.867, VALID_time: 0.8613, losses:3.818, losses_emb:1.405e-05, best_valid(recall@20): 0.1854
+valid 	 N@5: 0.1367, R@5: 0.08926, P@5: 0.1066
+valid 	 N@10: 0.1396, R@10: 0.1302, P@10: 0.07853
+valid 	 N@15: 0.1478, R@15: 0.1604, P@15: 0.06515
+valid 	 N@20: 0.1556, R@20: 0.1854, P@20: 0.05676
+
+2023-11-04 12:43:42,425 - [INFO] - E:40|train_time: 4.772, VALID_time: 0.8578, losses:3.816, losses_emb:1.448e-05, best_valid(recall@20): 0.1854
+valid 	 N@5: 0.137, R@5: 0.08942, P@5: 0.107
+valid 	 N@10: 0.1398, R@10: 0.1302, P@10: 0.0786
+valid 	 N@15: 0.1479, R@15: 0.1603, P@15: 0.06512
+valid 	 N@20: 0.1558, R@20: 0.1855, P@20: 0.05679
+
+2023-11-04 12:43:48,264 - [INFO] - E:41|train_time: 4.754, VALID_time: 0.9984, losses:3.814, losses_emb:1.492e-05, best_valid(recall@20): 0.1855
+valid 	 N@5: 0.1368, R@5: 0.0893, P@5: 0.1066
+valid 	 N@10: 0.1397, R@10: 0.1302, P@10: 0.07856
+valid 	 N@15: 0.1478, R@15: 0.1603, P@15: 0.06509
+valid 	 N@20: 0.1557, R@20: 0.1854, P@20: 0.05672
+
+2023-11-04 12:43:53,923 - [INFO] - E:42|train_time: 4.763, VALID_time: 0.8558, losses:3.813, losses_emb:1.535e-05, best_valid(recall@20): 0.1855
+valid 	 N@5: 0.137, R@5: 0.08958, P@5: 0.1069
+valid 	 N@10: 0.1398, R@10: 0.1302, P@10: 0.07854
+valid 	 N@15: 0.1479, R@15: 0.1604, P@15: 0.06511
+valid 	 N@20: 0.1557, R@20: 0.1853, P@20: 0.05673
+
+2023-11-04 12:43:59,836 - [INFO] - E:43|train_time: 4.889, VALID_time: 0.9761, losses:3.811, losses_emb:1.579e-05, best_valid(recall@20): 0.1855
+valid 	 N@5: 0.1372, R@5: 0.08977, P@5: 0.1071
+valid 	 N@10: 0.1397, R@10: 0.13, P@10: 0.07846
+valid 	 N@15: 0.148, R@15: 0.1604, P@15: 0.06517
+valid 	 N@20: 0.1558, R@20: 0.1854, P@20: 0.05675
+
+2023-11-04 12:44:05,814 - [INFO] - E:44|train_time: 4.863, VALID_time: 1.078, losses:3.81, losses_emb:1.623e-05, best_valid(recall@20): 0.1855
+valid 	 N@5: 0.137, R@5: 0.08956, P@5: 0.1069
+valid 	 N@10: 0.1398, R@10: 0.1303, P@10: 0.0786
+valid 	 N@15: 0.148, R@15: 0.1605, P@15: 0.06514
+valid 	 N@20: 0.1557, R@20: 0.1852, P@20: 0.05669
+
+2023-11-04 12:44:11,668 - [INFO] - E:45|train_time: 4.751, VALID_time: 1.066, losses:3.808, losses_emb:1.667e-05, best_valid(recall@20): 0.1855
+valid 	 N@5: 0.1369, R@5: 0.08964, P@5: 0.1068
+valid 	 N@10: 0.1397, R@10: 0.1303, P@10: 0.07851
+valid 	 N@15: 0.148, R@15: 0.1607, P@15: 0.0652
+valid 	 N@20: 0.1557, R@20: 0.1852, P@20: 0.05669
+
+2023-11-04 12:44:17,350 - [INFO] - E:46|train_time: 4.78, VALID_time: 0.8531, losses:3.807, losses_emb:1.711e-05, best_valid(recall@20): 0.1855
+valid 	 N@5: 0.1371, R@5: 0.08979, P@5: 0.107
+valid 	 N@10: 0.1399, R@10: 0.1304, P@10: 0.0787
+valid 	 N@15: 0.1482, R@15: 0.1611, P@15: 0.06534
+valid 	 N@20: 0.1558, R@20: 0.1855, P@20: 0.05681
+
+2023-11-04 12:44:23,125 - [INFO] - E:47|train_time: 4.816, VALID_time: 0.8835, losses:3.806, losses_emb:1.756e-05, best_valid(recall@20): 0.1855
+valid 	 N@5: 0.1372, R@5: 0.08986, P@5: 0.107
+valid 	 N@10: 0.14, R@10: 0.1304, P@10: 0.07866
+valid 	 N@15: 0.1483, R@15: 0.161, P@15: 0.06531
+valid 	 N@20: 0.156, R@20: 0.1858, P@20: 0.05685
+
+2023-11-04 12:44:28,935 - [INFO] - E:48|train_time: 4.794, VALID_time: 0.9514, losses:3.804, losses_emb:1.799e-05, best_valid(recall@20): 0.1858
+valid 	 N@5: 0.1371, R@5: 0.0896, P@5: 0.1069
+valid 	 N@10: 0.1398, R@10: 0.1302, P@10: 0.07852
+valid 	 N@15: 0.1482, R@15: 0.1608, P@15: 0.06528
+valid 	 N@20: 0.156, R@20: 0.1857, P@20: 0.05686
+
+2023-11-04 12:44:34,739 - [INFO] - E:49|train_time: 4.797, VALID_time: 0.9535, losses:3.803, losses_emb:1.844e-05, best_valid(recall@20): 0.1858
+valid 	 N@5: 0.137, R@5: 0.08977, P@5: 0.1069
+valid 	 N@10: 0.1396, R@10: 0.1302, P@10: 0.07849
+valid 	 N@15: 0.148, R@15: 0.1607, P@15: 0.06524
+valid 	 N@20: 0.1558, R@20: 0.1857, P@20: 0.05678
+
+2023-11-04 12:44:40,459 - [INFO] - E:50|train_time: 4.814, VALID_time: 0.8654, losses:3.802, losses_emb:1.888e-05, best_valid(recall@20): 0.1858
+valid 	 N@5: 0.1371, R@5: 0.08978, P@5: 0.107
+valid 	 N@10: 0.1398, R@10: 0.1302, P@10: 0.07862
+valid 	 N@15: 0.1482, R@15: 0.161, P@15: 0.06534
+valid 	 N@20: 0.1559, R@20: 0.1857, P@20: 0.05686
+
+2023-11-04 12:44:46,212 - [INFO] - E:51|train_time: 4.79, VALID_time: 0.9085, losses:3.8, losses_emb:1.933e-05, best_valid(recall@20): 0.1858
+valid 	 N@5: 0.1371, R@5: 0.08971, P@5: 0.1069
+valid 	 N@10: 0.14, R@10: 0.1305, P@10: 0.07869
+valid 	 N@15: 0.1482, R@15: 0.161, P@15: 0.06529
+valid 	 N@20: 0.156, R@20: 0.1857, P@20: 0.05686
+
+2023-11-04 12:44:51,896 - [INFO] - E:52|train_time: 4.776, VALID_time: 0.8729, losses:3.799, losses_emb:1.977e-05, best_valid(recall@20): 0.1858
+valid 	 N@5: 0.1371, R@5: 0.08955, P@5: 0.1069
+valid 	 N@10: 0.14, R@10: 0.1307, P@10: 0.07874
+valid 	 N@15: 0.1482, R@15: 0.161, P@15: 0.06534
+valid 	 N@20: 0.1559, R@20: 0.1857, P@20: 0.05682
+
+2023-11-04 12:44:57,624 - [INFO] - E:53|train_time: 4.764, VALID_time: 0.9185, losses:3.799, losses_emb:2.022e-05, best_valid(recall@20): 0.1858
+valid 	 N@5: 0.1371, R@5: 0.08941, P@5: 0.1068
+valid 	 N@10: 0.1401, R@10: 0.1307, P@10: 0.0787
+valid 	 N@15: 0.1484, R@15: 0.161, P@15: 0.06535
+valid 	 N@20: 0.156, R@20: 0.1856, P@20: 0.0568
+
+2023-11-04 12:45:03,298 - [INFO] - E:54|train_time: 4.78, VALID_time: 0.8489, losses:3.797, losses_emb:2.066e-05, best_valid(recall@20): 0.1858
+valid 	 N@5: 0.1372, R@5: 0.08982, P@5: 0.1071
+valid 	 N@10: 0.1399, R@10: 0.1304, P@10: 0.07863
+valid 	 N@15: 0.1483, R@15: 0.1612, P@15: 0.06537
+valid 	 N@20: 0.1559, R@20: 0.1856, P@20: 0.05681
+
+2023-11-04 12:45:09,107 - [INFO] - E:55|train_time: 4.847, VALID_time: 0.9208, losses:3.796, losses_emb:2.111e-05, best_valid(recall@20): 0.1858
+valid 	 N@5: 0.1371, R@5: 0.08975, P@5: 0.107
+valid 	 N@10: 0.1401, R@10: 0.1309, P@10: 0.07878
+valid 	 N@15: 0.1484, R@15: 0.1614, P@15: 0.06546
+valid 	 N@20: 0.156, R@20: 0.1859, P@20: 0.05685
+
+2023-11-04 12:45:14,837 - [INFO] - E:56|train_time: 4.848, VALID_time: 0.793, losses:3.795, losses_emb:2.156e-05, best_valid(recall@20): 0.1859
+valid 	 N@5: 0.1374, R@5: 0.08989, P@5: 0.1072
+valid 	 N@10: 0.1401, R@10: 0.1307, P@10: 0.07878
+valid 	 N@15: 0.1484, R@15: 0.161, P@15: 0.06536
+valid 	 N@20: 0.1562, R@20: 0.1862, P@20: 0.05694
+
+2023-11-04 12:45:20,586 - [INFO] - E:57|train_time: 4.77, VALID_time: 0.8871, losses:3.794, losses_emb:2.2e-05, best_valid(recall@20): 0.1862
+valid 	 N@5: 0.1372, R@5: 0.0898, P@5: 0.107
+valid 	 N@10: 0.1401, R@10: 0.1308, P@10: 0.07877
+valid 	 N@15: 0.1484, R@15: 0.1612, P@15: 0.06543
+valid 	 N@20: 0.1561, R@20: 0.1861, P@20: 0.0569
+
+2023-11-04 12:45:26,287 - [INFO] - E:58|train_time: 4.832, VALID_time: 0.8229, losses:3.793, losses_emb:2.245e-05, best_valid(recall@20): 0.1862
+valid 	 N@5: 0.1372, R@5: 0.08983, P@5: 0.1071
+valid 	 N@10: 0.1401, R@10: 0.1307, P@10: 0.07882
+valid 	 N@15: 0.1485, R@15: 0.1615, P@15: 0.06547
+valid 	 N@20: 0.1561, R@20: 0.1861, P@20: 0.05689
+
+2023-11-04 12:45:32,046 - [INFO] - E:59|train_time: 4.818, VALID_time: 0.8809, losses:3.792, losses_emb:2.29e-05, best_valid(recall@20): 0.1862
+valid 	 N@5: 0.1373, R@5: 0.09, P@5: 0.1072
+valid 	 N@10: 0.1401, R@10: 0.1307, P@10: 0.07877
+valid 	 N@15: 0.1484, R@15: 0.1611, P@15: 0.06539
+valid 	 N@20: 0.1561, R@20: 0.1858, P@20: 0.05687
+
+2023-11-04 12:45:37,776 - [INFO] - E:60|train_time: 4.788, VALID_time: 0.877, losses:3.791, losses_emb:2.334e-05, best_valid(recall@20): 0.1862
+valid 	 N@5: 0.1372, R@5: 0.08983, P@5: 0.107
+valid 	 N@10: 0.1401, R@10: 0.1308, P@10: 0.0788
+valid 	 N@15: 0.1483, R@15: 0.1609, P@15: 0.06533
+valid 	 N@20: 0.156, R@20: 0.1858, P@20: 0.05681
+
+2023-11-04 12:45:43,453 - [INFO] - E:61|train_time: 4.783, VALID_time: 0.8638, losses:3.79, losses_emb:2.379e-05, best_valid(recall@20): 0.1862
+valid 	 N@5: 0.1371, R@5: 0.08978, P@5: 0.107
+valid 	 N@10: 0.1401, R@10: 0.1309, P@10: 0.07891
+valid 	 N@15: 0.1483, R@15: 0.1611, P@15: 0.0654
+valid 	 N@20: 0.1561, R@20: 0.1862, P@20: 0.05695
+
+2023-11-04 12:45:49,184 - [INFO] - E:62|train_time: 4.754, VALID_time: 0.9289, losses:3.789, losses_emb:2.424e-05, best_valid(recall@20): 0.1862
+valid 	 N@5: 0.1374, R@5: 0.0898, P@5: 0.1072
+valid 	 N@10: 0.1403, R@10: 0.1311, P@10: 0.07897
+valid 	 N@15: 0.1485, R@15: 0.1613, P@15: 0.06545
+valid 	 N@20: 0.1562, R@20: 0.1861, P@20: 0.0569
+
+2023-11-04 12:45:54,949 - [INFO] - E:63|train_time: 4.847, VALID_time: 0.8781, losses:3.789, losses_emb:2.469e-05, best_valid(recall@20): 0.1862
+valid 	 N@5: 0.1374, R@5: 0.08985, P@5: 0.1071
+valid 	 N@10: 0.1403, R@10: 0.131, P@10: 0.07887
+valid 	 N@15: 0.1486, R@15: 0.1615, P@15: 0.0655
+valid 	 N@20: 0.1563, R@20: 0.1862, P@20: 0.0569
+
+2023-11-04 12:46:00,697 - [INFO] - E:64|train_time: 4.835, VALID_time: 0.8327, losses:3.787, losses_emb:2.514e-05, best_valid(recall@20): 0.1862
+valid 	 N@5: 0.1372, R@5: 0.08975, P@5: 0.1069
+valid 	 N@10: 0.1402, R@10: 0.1308, P@10: 0.07882
+valid 	 N@15: 0.1486, R@15: 0.1614, P@15: 0.0655
+valid 	 N@20: 0.1562, R@20: 0.1861, P@20: 0.05694
+
+2023-11-04 12:46:06,335 - [INFO] - E:65|train_time: 4.72, VALID_time: 0.8762, losses:3.787, losses_emb:2.559e-05, best_valid(recall@20): 0.1862
+valid 	 N@5: 0.1371, R@5: 0.08959, P@5: 0.1067
+valid 	 N@10: 0.1403, R@10: 0.131, P@10: 0.07888
+valid 	 N@15: 0.1485, R@15: 0.1613, P@15: 0.06548
+valid 	 N@20: 0.1562, R@20: 0.1861, P@20: 0.05693
+
+2023-11-04 12:46:12,058 - [INFO] - E:66|train_time: 4.81, VALID_time: 0.8581, losses:3.786, losses_emb:2.604e-05, best_valid(recall@20): 0.1862
+valid 	 N@5: 0.1374, R@5: 0.09009, P@5: 0.1072
+valid 	 N@10: 0.1403, R@10: 0.131, P@10: 0.07891
+valid 	 N@15: 0.1486, R@15: 0.1614, P@15: 0.06548
+valid 	 N@20: 0.1562, R@20: 0.1861, P@20: 0.05687
+
+2023-11-04 12:46:17,662 - [INFO] - E:67|train_time: 4.768, VALID_time: 0.7966, losses:3.785, losses_emb:2.649e-05, best_valid(recall@20): 0.1862
+valid 	 N@5: 0.1375, R@5: 0.09, P@5: 0.1071
+valid 	 N@10: 0.1403, R@10: 0.1309, P@10: 0.0789
+valid 	 N@15: 0.1486, R@15: 0.1613, P@15: 0.06549
+valid 	 N@20: 0.1564, R@20: 0.1863, P@20: 0.05696
+
+2023-11-04 12:46:23,450 - [INFO] - E:68|train_time: 4.772, VALID_time: 0.9054, losses:3.784, losses_emb:2.694e-05, best_valid(recall@20): 0.1863
+valid 	 N@5: 0.1373, R@5: 0.08987, P@5: 0.1071
+valid 	 N@10: 0.1403, R@10: 0.131, P@10: 0.07888
+valid 	 N@15: 0.1485, R@15: 0.1612, P@15: 0.06545
+valid 	 N@20: 0.1563, R@20: 0.1864, P@20: 0.05692
+
+2023-11-04 12:46:29,234 - [INFO] - E:69|train_time: 4.813, VALID_time: 0.8953, losses:3.783, losses_emb:2.739e-05, best_valid(recall@20): 0.1864
+valid 	 N@5: 0.1375, R@5: 0.09004, P@5: 0.1072
+valid 	 N@10: 0.1405, R@10: 0.1313, P@10: 0.07903
+valid 	 N@15: 0.1485, R@15: 0.1611, P@15: 0.06538
+valid 	 N@20: 0.1562, R@20: 0.186, P@20: 0.05687
+
+2023-11-04 12:46:35,107 - [INFO] - E:70|train_time: 4.83, VALID_time: 0.9805, losses:3.783, losses_emb:2.784e-05, best_valid(recall@20): 0.1864
+valid 	 N@5: 0.1373, R@5: 0.08992, P@5: 0.1071
+valid 	 N@10: 0.1404, R@10: 0.1311, P@10: 0.07904
+valid 	 N@15: 0.1484, R@15: 0.1611, P@15: 0.06541
+valid 	 N@20: 0.1562, R@20: 0.1861, P@20: 0.05692
+
+2023-11-04 12:46:40,697 - [INFO] - E:71|train_time: 4.755, VALID_time: 0.7911, losses:3.782, losses_emb:2.829e-05, best_valid(recall@20): 0.1864
+valid 	 N@5: 0.1375, R@5: 0.09015, P@5: 0.1073
+valid 	 N@10: 0.1403, R@10: 0.131, P@10: 0.07893
+valid 	 N@15: 0.1484, R@15: 0.1612, P@15: 0.06541
+valid 	 N@20: 0.1561, R@20: 0.1858, P@20: 0.05686
+
+2023-11-04 12:46:46,464 - [INFO] - E:72|train_time: 4.818, VALID_time: 0.9007, losses:3.782, losses_emb:2.875e-05, best_valid(recall@20): 0.1864
+valid 	 N@5: 0.1373, R@5: 0.09004, P@5: 0.1071
+valid 	 N@10: 0.1402, R@10: 0.1309, P@10: 0.07885
+valid 	 N@15: 0.1485, R@15: 0.1613, P@15: 0.06543
+valid 	 N@20: 0.1561, R@20: 0.1858, P@20: 0.05689
+
+2023-11-04 12:46:52,246 - [INFO] - E:73|train_time: 4.838, VALID_time: 0.8687, losses:3.781, losses_emb:2.92e-05, best_valid(recall@20): 0.1864
+valid 	 N@5: 0.1374, R@5: 0.08998, P@5: 0.1071
+valid 	 N@10: 0.1403, R@10: 0.1309, P@10: 0.07884
+valid 	 N@15: 0.1485, R@15: 0.1612, P@15: 0.06542
+valid 	 N@20: 0.1562, R@20: 0.186, P@20: 0.05694
+
+2023-11-04 12:46:57,868 - [INFO] - E:74|train_time: 4.787, VALID_time: 0.7932, losses:3.781, losses_emb:2.965e-05, best_valid(recall@20): 0.1864
+valid 	 N@5: 0.1376, R@5: 0.09018, P@5: 0.1073
+valid 	 N@10: 0.1404, R@10: 0.1311, P@10: 0.07887
+valid 	 N@15: 0.1486, R@15: 0.1613, P@15: 0.06552
+valid 	 N@20: 0.1563, R@20: 0.1861, P@20: 0.05695
+
+2023-11-04 12:47:03,660 - [INFO] - E:75|train_time: 4.828, VALID_time: 0.9152, losses:3.78, losses_emb:3.01e-05, best_valid(recall@20): 0.1864
+valid 	 N@5: 0.1376, R@5: 0.09022, P@5: 0.1074
+valid 	 N@10: 0.1403, R@10: 0.1309, P@10: 0.07888
+valid 	 N@15: 0.1486, R@15: 0.1615, P@15: 0.06545
+valid 	 N@20: 0.1562, R@20: 0.186, P@20: 0.05689
+
+2023-11-04 12:47:09,292 - [INFO] - E:76|train_time: 4.789, VALID_time: 0.8004, losses:3.779, losses_emb:3.055e-05, best_valid(recall@20): 0.1864
+valid 	 N@5: 0.1376, R@5: 0.09002, P@5: 0.1073
+valid 	 N@10: 0.1404, R@10: 0.1311, P@10: 0.07891
+valid 	 N@15: 0.1487, R@15: 0.1614, P@15: 0.0655
+valid 	 N@20: 0.1563, R@20: 0.1861, P@20: 0.05693
+
+2023-11-04 12:47:14,971 - [INFO] - E:77|train_time: 4.79, VALID_time: 0.8374, losses:3.778, losses_emb:3.101e-05, best_valid(recall@20): 0.1864
+valid 	 N@5: 0.1377, R@5: 0.09013, P@5: 0.1074
+valid 	 N@10: 0.1404, R@10: 0.1309, P@10: 0.07885
+valid 	 N@15: 0.1487, R@15: 0.1614, P@15: 0.06547
+valid 	 N@20: 0.1564, R@20: 0.1862, P@20: 0.05695
+
+2023-11-04 12:47:20,638 - [INFO] - E:78|train_time: 4.845, VALID_time: 0.7859, losses:3.778, losses_emb:3.146e-05, best_valid(recall@20): 0.1864
+valid 	 N@5: 0.1375, R@5: 0.09001, P@5: 0.1072
+valid 	 N@10: 0.1404, R@10: 0.1311, P@10: 0.07898
+valid 	 N@15: 0.1487, R@15: 0.1614, P@15: 0.0655
+valid 	 N@20: 0.1563, R@20: 0.1861, P@20: 0.05695
+
+2023-11-04 12:47:26,425 - [INFO] - E:79|train_time: 4.835, VALID_time: 0.9065, losses:3.777, losses_emb:3.191e-05, best_valid(recall@20): 0.1864
+valid 	 N@5: 0.1376, R@5: 0.09002, P@5: 0.1073
+valid 	 N@10: 0.1404, R@10: 0.1311, P@10: 0.07894
+valid 	 N@15: 0.1487, R@15: 0.1615, P@15: 0.0655
+valid 	 N@20: 0.1564, R@20: 0.1863, P@20: 0.057
+
+2023-11-04 12:47:32,132 - [INFO] - E:80|train_time: 4.735, VALID_time: 0.9255, losses:3.776, losses_emb:3.237e-05, best_valid(recall@20): 0.1864
+valid 	 N@5: 0.1375, R@5: 0.0901, P@5: 0.1073
+valid 	 N@10: 0.1404, R@10: 0.1311, P@10: 0.0789
+valid 	 N@15: 0.1487, R@15: 0.1615, P@15: 0.06547
+valid 	 N@20: 0.1565, R@20: 0.1865, P@20: 0.05704
+
+2023-11-04 12:47:37,880 - [INFO] - E:81|train_time: 4.832, VALID_time: 0.8333, losses:3.776, losses_emb:3.282e-05, best_valid(recall@20): 0.1865
+valid 	 N@5: 0.1378, R@5: 0.09035, P@5: 0.1076
+valid 	 N@10: 0.1405, R@10: 0.1312, P@10: 0.07899
+valid 	 N@15: 0.1487, R@15: 0.1614, P@15: 0.06544
+valid 	 N@20: 0.1565, R@20: 0.1863, P@20: 0.05697
+
+2023-11-04 12:47:43,612 - [INFO] - E:82|train_time: 4.742, VALID_time: 0.9143, losses:3.775, losses_emb:3.327e-05, best_valid(recall@20): 0.1865
+valid 	 N@5: 0.1379, R@5: 0.09039, P@5: 0.1077
+valid 	 N@10: 0.1405, R@10: 0.1312, P@10: 0.07906
+valid 	 N@15: 0.1488, R@15: 0.1617, P@15: 0.06556
+valid 	 N@20: 0.1565, R@20: 0.1863, P@20: 0.05698
+
+2023-11-04 12:47:49,302 - [INFO] - E:83|train_time: 4.787, VALID_time: 0.8565, losses:3.775, losses_emb:3.372e-05, best_valid(recall@20): 0.1865
+valid 	 N@5: 0.1377, R@5: 0.09016, P@5: 0.1075
+valid 	 N@10: 0.1404, R@10: 0.1312, P@10: 0.07896
+valid 	 N@15: 0.1487, R@15: 0.1614, P@15: 0.06553
+valid 	 N@20: 0.1564, R@20: 0.1863, P@20: 0.05697
+
+2023-11-04 12:47:54,940 - [INFO] - E:84|train_time: 4.69, VALID_time: 0.8896, losses:3.774, losses_emb:3.418e-05, best_valid(recall@20): 0.1865
+valid 	 N@5: 0.1375, R@5: 0.09003, P@5: 0.1073
+valid 	 N@10: 0.1404, R@10: 0.1312, P@10: 0.07898
+valid 	 N@15: 0.1487, R@15: 0.1616, P@15: 0.06557
+valid 	 N@20: 0.1564, R@20: 0.1864, P@20: 0.057
+
+2023-11-04 12:48:00,943 - [INFO] - E:85|train_time: 4.83, VALID_time: 1.135, losses:3.774, losses_emb:3.463e-05, best_valid(recall@20): 0.1865
+valid 	 N@5: 0.1375, R@5: 0.0902, P@5: 0.1074
+valid 	 N@10: 0.1404, R@10: 0.1312, P@10: 0.07892
+valid 	 N@15: 0.1486, R@15: 0.1616, P@15: 0.06551
+valid 	 N@20: 0.1565, R@20: 0.1866, P@20: 0.05707
+
+2023-11-04 12:48:06,853 - [INFO] - E:86|train_time: 4.777, VALID_time: 1.05, losses:3.773, losses_emb:3.509e-05, best_valid(recall@20): 0.1866
+valid 	 N@5: 0.1377, R@5: 0.09019, P@5: 0.1074
+valid 	 N@10: 0.1406, R@10: 0.1313, P@10: 0.07905
+valid 	 N@15: 0.1487, R@15: 0.1614, P@15: 0.06555
+valid 	 N@20: 0.1566, R@20: 0.1866, P@20: 0.05707
+
+2023-11-04 12:48:12,512 - [INFO] - E:87|train_time: 4.779, VALID_time: 0.8296, losses:3.772, losses_emb:3.554e-05, best_valid(recall@20): 0.1866
+valid 	 N@5: 0.1375, R@5: 0.09019, P@5: 0.1073
+valid 	 N@10: 0.1404, R@10: 0.131, P@10: 0.07894
+valid 	 N@15: 0.1487, R@15: 0.1615, P@15: 0.0655
+valid 	 N@20: 0.1566, R@20: 0.1867, P@20: 0.05711
+
+2023-11-04 12:48:18,288 - [INFO] - E:88|train_time: 4.811, VALID_time: 0.8748, losses:3.772, losses_emb:3.6e-05, best_valid(recall@20): 0.1867
+valid 	 N@5: 0.1374, R@5: 0.08998, P@5: 0.1071
+valid 	 N@10: 0.1404, R@10: 0.1311, P@10: 0.07899
+valid 	 N@15: 0.1486, R@15: 0.1614, P@15: 0.06544
+valid 	 N@20: 0.1564, R@20: 0.1864, P@20: 0.05706
+
+2023-11-04 12:48:24,036 - [INFO] - E:89|train_time: 4.812, VALID_time: 0.895, losses:3.771, losses_emb:3.645e-05, best_valid(recall@20): 0.1867
+valid 	 N@5: 0.1377, R@5: 0.09021, P@5: 0.1074
+valid 	 N@10: 0.1405, R@10: 0.1312, P@10: 0.07898
+valid 	 N@15: 0.1489, R@15: 0.1619, P@15: 0.0656
+valid 	 N@20: 0.1565, R@20: 0.1865, P@20: 0.05706
+
+2023-11-04 12:48:29,737 - [INFO] - E:90|train_time: 4.807, VALID_time: 0.8345, losses:3.771, losses_emb:3.691e-05, best_valid(recall@20): 0.1867
+valid 	 N@5: 0.1377, R@5: 0.09027, P@5: 0.1074
+valid 	 N@10: 0.1404, R@10: 0.1311, P@10: 0.07894
+valid 	 N@15: 0.1487, R@15: 0.1616, P@15: 0.0655
+valid 	 N@20: 0.1565, R@20: 0.1863, P@20: 0.05702
+
+2023-11-04 12:48:35,404 - [INFO] - E:91|train_time: 4.811, VALID_time: 0.8107, losses:3.771, losses_emb:3.736e-05, best_valid(recall@20): 0.1867
+valid 	 N@5: 0.1377, R@5: 0.09031, P@5: 0.1074
+valid 	 N@10: 0.1404, R@10: 0.131, P@10: 0.07886
+valid 	 N@15: 0.1487, R@15: 0.1615, P@15: 0.0655
+valid 	 N@20: 0.1565, R@20: 0.1864, P@20: 0.05702
+
+2023-11-04 12:48:41,080 - [INFO] - E:92|train_time: 4.807, VALID_time: 0.8236, losses:3.77, losses_emb:3.782e-05, best_valid(recall@20): 0.1867
+valid 	 N@5: 0.1376, R@5: 0.09036, P@5: 0.1074
+valid 	 N@10: 0.1403, R@10: 0.1308, P@10: 0.0789
+valid 	 N@15: 0.1486, R@15: 0.1613, P@15: 0.06549
+valid 	 N@20: 0.1565, R@20: 0.1866, P@20: 0.05706
+
+2023-11-04 12:48:46,795 - [INFO] - E:93|train_time: 4.753, VALID_time: 0.9173, losses:3.77, losses_emb:3.827e-05, best_valid(recall@20): 0.1867
+valid 	 N@5: 0.1376, R@5: 0.09022, P@5: 0.1073
+valid 	 N@10: 0.1403, R@10: 0.1309, P@10: 0.07875
+valid 	 N@15: 0.1486, R@15: 0.1613, P@15: 0.06541
+valid 	 N@20: 0.1564, R@20: 0.1863, P@20: 0.057
+
+2023-11-04 12:48:52,586 - [INFO] - E:94|train_time: 4.842, VALID_time: 0.8947, losses:3.769, losses_emb:3.873e-05, best_valid(recall@20): 0.1867
+valid 	 N@5: 0.1377, R@5: 0.0902, P@5: 0.1074
+valid 	 N@10: 0.1402, R@10: 0.1308, P@10: 0.07882
+valid 	 N@15: 0.1487, R@15: 0.1615, P@15: 0.06552
+valid 	 N@20: 0.1564, R@20: 0.1863, P@20: 0.05703
+
+2023-11-04 12:48:58,288 - [INFO] - E:95|train_time: 4.803, VALID_time: 0.8417, losses:3.769, losses_emb:3.918e-05, best_valid(recall@20): 0.1867
+valid 	 N@5: 0.1378, R@5: 0.09017, P@5: 0.1074
+valid 	 N@10: 0.1405, R@10: 0.131, P@10: 0.07888
+valid 	 N@15: 0.1488, R@15: 0.1616, P@15: 0.06553
+valid 	 N@20: 0.1567, R@20: 0.1867, P@20: 0.0571
+
+2023-11-04 12:49:04,269 - [INFO] - E:96|train_time: 4.813, VALID_time: 1.054, losses:3.768, losses_emb:3.964e-05, best_valid(recall@20): 0.1867
+valid 	 N@5: 0.1377, R@5: 0.09024, P@5: 0.1074
+valid 	 N@10: 0.1404, R@10: 0.1308, P@10: 0.07885
+valid 	 N@15: 0.1489, R@15: 0.1618, P@15: 0.06558
+valid 	 N@20: 0.1566, R@20: 0.1866, P@20: 0.0571
+
+2023-11-04 12:49:09,821 - [INFO] - E:97|train_time: 4.734, VALID_time: 0.7763, losses:3.768, losses_emb:4.009e-05, best_valid(recall@20): 0.1867
+valid 	 N@5: 0.1377, R@5: 0.09031, P@5: 0.1074
+valid 	 N@10: 0.1403, R@10: 0.1308, P@10: 0.07882
+valid 	 N@15: 0.1488, R@15: 0.1618, P@15: 0.06557
+valid 	 N@20: 0.1566, R@20: 0.1866, P@20: 0.05709
+
+2023-11-04 12:49:15,474 - [INFO] - E:98|train_time: 4.698, VALID_time: 0.9186, losses:3.767, losses_emb:4.055e-05, best_valid(recall@20): 0.1867
+valid 	 N@5: 0.1379, R@5: 0.09048, P@5: 0.1076
+valid 	 N@10: 0.1404, R@10: 0.1309, P@10: 0.07885
+valid 	 N@15: 0.1488, R@15: 0.1615, P@15: 0.06551
+valid 	 N@20: 0.1567, R@20: 0.1868, P@20: 0.05707
+
+2023-11-04 12:49:21,188 - [INFO] - E:99|train_time: 4.799, VALID_time: 0.8195, losses:3.767, losses_emb:4.1e-05, best_valid(recall@20): 0.1868
+valid 	 N@5: 0.1378, R@5: 0.09039, P@5: 0.1075
+valid 	 N@10: 0.1403, R@10: 0.1308, P@10: 0.07881
+valid 	 N@15: 0.1488, R@15: 0.1617, P@15: 0.06552
+valid 	 N@20: 0.1567, R@20: 0.1869, P@20: 0.05716
+
+2023-11-04 12:49:26,870 - [INFO] - E:100|train_time: 4.838, VALID_time: 0.7702, losses:3.767, losses_emb:4.146e-05, best_valid(recall@20): 0.1869
+valid 	 N@5: 0.1377, R@5: 0.09036, P@5: 0.1074
+valid 	 N@10: 0.1403, R@10: 0.1308, P@10: 0.07886
+valid 	 N@15: 0.1489, R@15: 0.1619, P@15: 0.06565
+valid 	 N@20: 0.1566, R@20: 0.1868, P@20: 0.05709
+
+2023-11-04 12:49:32,556 - [INFO] - E:101|train_time: 4.798, VALID_time: 0.8371, losses:3.766, losses_emb:4.191e-05, best_valid(recall@20): 0.1869
+valid 	 N@5: 0.1376, R@5: 0.0903, P@5: 0.1073
+valid 	 N@10: 0.1403, R@10: 0.1309, P@10: 0.07891
+valid 	 N@15: 0.1488, R@15: 0.1617, P@15: 0.06556
+valid 	 N@20: 0.1566, R@20: 0.1867, P@20: 0.0571
+
+2023-11-04 12:49:38,232 - [INFO] - E:102|train_time: 4.786, VALID_time: 0.8603, losses:3.766, losses_emb:4.237e-05, best_valid(recall@20): 0.1869
+valid 	 N@5: 0.1377, R@5: 0.09029, P@5: 0.1074
+valid 	 N@10: 0.1404, R@10: 0.131, P@10: 0.07894
+valid 	 N@15: 0.1489, R@15: 0.1618, P@15: 0.06568
+valid 	 N@20: 0.1567, R@20: 0.187, P@20: 0.05719
+
+2023-11-04 12:49:43,997 - [INFO] - E:103|train_time: 4.761, VALID_time: 0.8941, losses:3.766, losses_emb:4.283e-05, best_valid(recall@20): 0.187
+valid 	 N@5: 0.1375, R@5: 0.09017, P@5: 0.1072
+valid 	 N@10: 0.1404, R@10: 0.131, P@10: 0.07898
+valid 	 N@15: 0.1488, R@15: 0.1618, P@15: 0.06563
+valid 	 N@20: 0.1564, R@20: 0.1864, P@20: 0.05703
+
+2023-11-04 12:49:49,608 - [INFO] - E:104|train_time: 4.788, VALID_time: 0.7816, losses:3.765, losses_emb:4.328e-05, best_valid(recall@20): 0.187
+valid 	 N@5: 0.1376, R@5: 0.09014, P@5: 0.1074
+valid 	 N@10: 0.1403, R@10: 0.1309, P@10: 0.07888
+valid 	 N@15: 0.1487, R@15: 0.1618, P@15: 0.06556
+valid 	 N@20: 0.1565, R@20: 0.1866, P@20: 0.0571
+
+2023-11-04 12:49:55,198 - [INFO] - E:105|train_time: 4.775, VALID_time: 0.7838, losses:3.765, losses_emb:4.374e-05, best_valid(recall@20): 0.187
+valid 	 N@5: 0.1376, R@5: 0.09023, P@5: 0.1074
+valid 	 N@10: 0.1404, R@10: 0.1312, P@10: 0.079
+valid 	 N@15: 0.1488, R@15: 0.1619, P@15: 0.06561
+valid 	 N@20: 0.1565, R@20: 0.1865, P@20: 0.05703
+
+2023-11-04 12:50:00,985 - [INFO] - E:106|train_time: 4.804, VALID_time: 0.921, losses:3.764, losses_emb:4.419e-05, best_valid(recall@20): 0.187
+valid 	 N@5: 0.1376, R@5: 0.09017, P@5: 0.1073
+valid 	 N@10: 0.1404, R@10: 0.1312, P@10: 0.07898
+valid 	 N@15: 0.1487, R@15: 0.1617, P@15: 0.06553
+valid 	 N@20: 0.1566, R@20: 0.1868, P@20: 0.05712
+
+2023-11-04 12:50:06,939 - [INFO] - E:107|train_time: 4.831, VALID_time: 1.089, losses:3.764, losses_emb:4.465e-05, best_valid(recall@20): 0.187
+valid 	 N@5: 0.1376, R@5: 0.0903, P@5: 0.1075
+valid 	 N@10: 0.1405, R@10: 0.1313, P@10: 0.07908
+valid 	 N@15: 0.1487, R@15: 0.1617, P@15: 0.06551
+valid 	 N@20: 0.1567, R@20: 0.187, P@20: 0.05717
+
+2023-11-04 12:50:12,717 - [INFO] - E:108|train_time: 4.815, VALID_time: 0.9137, losses:3.764, losses_emb:4.51e-05, best_valid(recall@20): 0.187
+valid 	 N@5: 0.1377, R@5: 0.09037, P@5: 0.1076
+valid 	 N@10: 0.1405, R@10: 0.1313, P@10: 0.07913
+valid 	 N@15: 0.1488, R@15: 0.1618, P@15: 0.06555
+valid 	 N@20: 0.1566, R@20: 0.1869, P@20: 0.0571
+
+2023-11-04 12:50:18,630 - [INFO] - E:109|train_time: 4.853, VALID_time: 1.018, losses:3.763, losses_emb:4.556e-05, best_valid(recall@20): 0.187
+valid 	 N@5: 0.1377, R@5: 0.09042, P@5: 0.1074
+valid 	 N@10: 0.1405, R@10: 0.1312, P@10: 0.07903
+valid 	 N@15: 0.1488, R@15: 0.1618, P@15: 0.06553
+valid 	 N@20: 0.1566, R@20: 0.1866, P@20: 0.05706
+
+2023-11-04 12:50:24,434 - [INFO] - E:110|train_time: 4.806, VALID_time: 0.9475, losses:3.763, losses_emb:4.602e-05, best_valid(recall@20): 0.187
+valid 	 N@5: 0.1378, R@5: 0.09056, P@5: 0.1076
+valid 	 N@10: 0.1405, R@10: 0.1312, P@10: 0.079
+valid 	 N@15: 0.1489, R@15: 0.162, P@15: 0.06563
+valid 	 N@20: 0.1567, R@20: 0.1868, P@20: 0.05711
+
+2023-11-04 12:50:30,203 - [INFO] - E:111|train_time: 4.824, VALID_time: 0.9175, losses:3.762, losses_emb:4.647e-05, best_valid(recall@20): 0.187
+valid 	 N@5: 0.1378, R@5: 0.09054, P@5: 0.1075
+valid 	 N@10: 0.1405, R@10: 0.1312, P@10: 0.079
+valid 	 N@15: 0.1489, R@15: 0.1619, P@15: 0.06561
+valid 	 N@20: 0.1567, R@20: 0.1869, P@20: 0.05714
+
+2023-11-04 12:50:35,987 - [INFO] - E:112|train_time: 4.87, VALID_time: 0.8632, losses:3.762, losses_emb:4.693e-05, best_valid(recall@20): 0.187
+valid 	 N@5: 0.138, R@5: 0.09072, P@5: 0.1077
+valid 	 N@10: 0.1406, R@10: 0.1313, P@10: 0.07902
+valid 	 N@15: 0.1489, R@15: 0.1619, P@15: 0.06562
+valid 	 N@20: 0.1568, R@20: 0.187, P@20: 0.05719
+
+2023-11-04 12:50:41,945 - [INFO] - E:113|train_time: 4.856, VALID_time: 1.062, losses:3.762, losses_emb:4.739e-05, best_valid(recall@20): 0.187
+valid 	 N@5: 0.138, R@5: 0.09062, P@5: 0.1077
+valid 	 N@10: 0.1406, R@10: 0.1311, P@10: 0.07896
+valid 	 N@15: 0.149, R@15: 0.1619, P@15: 0.06558
+valid 	 N@20: 0.1568, R@20: 0.1868, P@20: 0.05716
+
+2023-11-04 12:50:47,980 - [INFO] - E:114|train_time: 4.862, VALID_time: 1.13, losses:3.761, losses_emb:4.785e-05, best_valid(recall@20): 0.187
+valid 	 N@5: 0.1379, R@5: 0.09046, P@5: 0.1075
+valid 	 N@10: 0.1406, R@10: 0.1313, P@10: 0.07897
+valid 	 N@15: 0.1489, R@15: 0.1617, P@15: 0.06554
+valid 	 N@20: 0.1568, R@20: 0.1868, P@20: 0.05715
+
+2023-11-04 12:50:53,884 - [INFO] - E:115|train_time: 4.865, VALID_time: 0.9491, losses:3.761, losses_emb:4.83e-05, best_valid(recall@20): 0.187
+valid 	 N@5: 0.1378, R@5: 0.09039, P@5: 0.1074
+valid 	 N@10: 0.1405, R@10: 0.131, P@10: 0.07895
+valid 	 N@15: 0.1488, R@15: 0.1615, P@15: 0.06553
+valid 	 N@20: 0.1568, R@20: 0.1869, P@20: 0.05718
+
+2023-11-04 12:50:59,746 - [INFO] - E:116|train_time: 4.942, VALID_time: 0.8669, losses:3.761, losses_emb:4.876e-05, best_valid(recall@20): 0.187
+valid 	 N@5: 0.1381, R@5: 0.0906, P@5: 0.1076
+valid 	 N@10: 0.1409, R@10: 0.1316, P@10: 0.07914
+valid 	 N@15: 0.149, R@15: 0.1617, P@15: 0.06555
+valid 	 N@20: 0.1569, R@20: 0.1868, P@20: 0.05715
+
+2023-11-04 12:51:05,507 - [INFO] - E:117|train_time: 4.858, VALID_time: 0.843, losses:3.76, losses_emb:4.921e-05, best_valid(recall@20): 0.187
+valid 	 N@5: 0.1379, R@5: 0.09044, P@5: 0.1076
+valid 	 N@10: 0.1405, R@10: 0.131, P@10: 0.07894
+valid 	 N@15: 0.1489, R@15: 0.1617, P@15: 0.0656
+valid 	 N@20: 0.1567, R@20: 0.1868, P@20: 0.05713
+
+2023-11-04 12:51:11,072 - [INFO] - E:118|train_time: 4.731, VALID_time: 0.7904, losses:3.76, losses_emb:4.967e-05, best_valid(recall@20): 0.187
+valid 	 N@5: 0.1379, R@5: 0.0904, P@5: 0.1074
+valid 	 N@10: 0.1406, R@10: 0.1311, P@10: 0.07904
+valid 	 N@15: 0.149, R@15: 0.1619, P@15: 0.06568
+valid 	 N@20: 0.1567, R@20: 0.1868, P@20: 0.05712
+
+2023-11-04 12:51:16,918 - [INFO] - E:119|train_time: 4.865, VALID_time: 0.9444, losses:3.76, losses_emb:5.013e-05, best_valid(recall@20): 0.187
+valid 	 N@5: 0.1378, R@5: 0.0904, P@5: 0.1074
+valid 	 N@10: 0.1406, R@10: 0.1312, P@10: 0.07904
+valid 	 N@15: 0.1489, R@15: 0.1617, P@15: 0.06558
+valid 	 N@20: 0.1568, R@20: 0.1868, P@20: 0.05715
+
+2023-11-04 12:51:22,656 - [INFO] - E:120|train_time: 4.806, VALID_time: 0.9004, losses:3.76, losses_emb:5.058e-05, best_valid(recall@20): 0.187
+valid 	 N@5: 0.1379, R@5: 0.09033, P@5: 0.1074
+valid 	 N@10: 0.1405, R@10: 0.131, P@10: 0.07893
+valid 	 N@15: 0.149, R@15: 0.1617, P@15: 0.06563
+valid 	 N@20: 0.1568, R@20: 0.1869, P@20: 0.05714
+
+2023-11-04 12:51:28,367 - [INFO] - E:121|train_time: 4.809, VALID_time: 0.8521, losses:3.759, losses_emb:5.104e-05, best_valid(recall@20): 0.187
+valid 	 N@5: 0.1377, R@5: 0.09026, P@5: 0.1073
+valid 	 N@10: 0.1406, R@10: 0.1312, P@10: 0.07902
+valid 	 N@15: 0.1488, R@15: 0.1616, P@15: 0.06551
+valid 	 N@20: 0.1568, R@20: 0.187, P@20: 0.05715
+
+2023-11-04 12:51:34,194 - [INFO] - E:122|train_time: 4.915, VALID_time: 0.8488, losses:3.759, losses_emb:5.15e-05, best_valid(recall@20): 0.187
+valid 	 N@5: 0.138, R@5: 0.09054, P@5: 0.1076
+valid 	 N@10: 0.1406, R@10: 0.1311, P@10: 0.07896
+valid 	 N@15: 0.1489, R@15: 0.1616, P@15: 0.06556
+valid 	 N@20: 0.157, R@20: 0.1873, P@20: 0.05721
+
+2023-11-04 12:51:39,987 - [INFO] - E:123|train_time: 4.865, VALID_time: 0.8566, losses:3.759, losses_emb:5.195e-05, best_valid(recall@20): 0.1873
+valid 	 N@5: 0.1379, R@5: 0.09037, P@5: 0.1075
+valid 	 N@10: 0.1407, R@10: 0.1312, P@10: 0.07899
+valid 	 N@15: 0.1491, R@15: 0.1619, P@15: 0.06564
+valid 	 N@20: 0.157, R@20: 0.1874, P@20: 0.05725
+
+2023-11-04 12:51:45,860 - [INFO] - E:124|train_time: 4.892, VALID_time: 0.9041, losses:3.758, losses_emb:5.24e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1379, R@5: 0.09046, P@5: 0.1075
+valid 	 N@10: 0.1407, R@10: 0.1312, P@10: 0.07904
+valid 	 N@15: 0.149, R@15: 0.1617, P@15: 0.06561
+valid 	 N@20: 0.1569, R@20: 0.187, P@20: 0.05717
+
+2023-11-04 12:51:51,640 - [INFO] - E:125|train_time: 4.871, VALID_time: 0.8795, losses:3.758, losses_emb:5.287e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1378, R@5: 0.09019, P@5: 0.1074
+valid 	 N@10: 0.1406, R@10: 0.1312, P@10: 0.07901
+valid 	 N@15: 0.1489, R@15: 0.1617, P@15: 0.06562
+valid 	 N@20: 0.1569, R@20: 0.1872, P@20: 0.05719
+
+2023-11-04 12:51:57,851 - [INFO] - E:126|train_time: 4.771, VALID_time: 1.386, losses:3.758, losses_emb:5.332e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1378, R@5: 0.09033, P@5: 0.1074
+valid 	 N@10: 0.1406, R@10: 0.1312, P@10: 0.07901
+valid 	 N@15: 0.1488, R@15: 0.1615, P@15: 0.06554
+valid 	 N@20: 0.1568, R@20: 0.187, P@20: 0.05713
+
+2023-11-04 12:52:04,072 - [INFO] - E:127|train_time: 4.891, VALID_time: 1.275, losses:3.757, losses_emb:5.378e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1379, R@5: 0.09028, P@5: 0.1074
+valid 	 N@10: 0.1407, R@10: 0.1313, P@10: 0.07907
+valid 	 N@15: 0.1489, R@15: 0.1614, P@15: 0.06554
+valid 	 N@20: 0.1569, R@20: 0.1869, P@20: 0.05713
+
+2023-11-04 12:52:09,937 - [INFO] - E:128|train_time: 4.888, VALID_time: 0.9205, losses:3.757, losses_emb:5.424e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1378, R@5: 0.09018, P@5: 0.1073
+valid 	 N@10: 0.1408, R@10: 0.1315, P@10: 0.07911
+valid 	 N@15: 0.1488, R@15: 0.1613, P@15: 0.0655
+valid 	 N@20: 0.1569, R@20: 0.1871, P@20: 0.05717
+
+2023-11-04 12:52:16,039 - [INFO] - E:129|train_time: 4.854, VALID_time: 1.205, losses:3.757, losses_emb:5.469e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1381, R@5: 0.09049, P@5: 0.1077
+valid 	 N@10: 0.1408, R@10: 0.1313, P@10: 0.07905
+valid 	 N@15: 0.1489, R@15: 0.1615, P@15: 0.06551
+valid 	 N@20: 0.157, R@20: 0.1871, P@20: 0.05717
+
+2023-11-04 12:52:22,009 - [INFO] - E:130|train_time: 4.805, VALID_time: 1.11, losses:3.756, losses_emb:5.515e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1379, R@5: 0.09048, P@5: 0.1076
+valid 	 N@10: 0.1406, R@10: 0.1312, P@10: 0.07903
+valid 	 N@15: 0.1489, R@15: 0.1615, P@15: 0.06555
+valid 	 N@20: 0.1569, R@20: 0.1871, P@20: 0.0572
+
+2023-11-04 12:52:28,568 - [INFO] - E:131|train_time: 4.937, VALID_time: 1.563, losses:3.756, losses_emb:5.561e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.138, R@5: 0.09035, P@5: 0.1075
+valid 	 N@10: 0.1407, R@10: 0.1313, P@10: 0.07902
+valid 	 N@15: 0.149, R@15: 0.1616, P@15: 0.06557
+valid 	 N@20: 0.157, R@20: 0.1872, P@20: 0.0572
+
+2023-11-04 12:52:34,379 - [INFO] - E:132|train_time: 4.874, VALID_time: 0.8891, losses:3.756, losses_emb:5.606e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1379, R@5: 0.09028, P@5: 0.1075
+valid 	 N@10: 0.1407, R@10: 0.1312, P@10: 0.07896
+valid 	 N@15: 0.1491, R@15: 0.1619, P@15: 0.06566
+valid 	 N@20: 0.1569, R@20: 0.187, P@20: 0.05714
+
+2023-11-04 12:52:40,095 - [INFO] - E:133|train_time: 4.761, VALID_time: 0.9041, losses:3.756, losses_emb:5.652e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.138, R@5: 0.09052, P@5: 0.1077
+valid 	 N@10: 0.1406, R@10: 0.1312, P@10: 0.07892
+valid 	 N@15: 0.1491, R@15: 0.1621, P@15: 0.06573
+valid 	 N@20: 0.1569, R@20: 0.187, P@20: 0.05713
+
+2023-11-04 12:52:45,798 - [INFO] - E:134|train_time: 4.821, VALID_time: 0.8401, losses:3.756, losses_emb:5.698e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.138, R@5: 0.09045, P@5: 0.1076
+valid 	 N@10: 0.1408, R@10: 0.1314, P@10: 0.07916
+valid 	 N@15: 0.1491, R@15: 0.1621, P@15: 0.06569
+valid 	 N@20: 0.1569, R@20: 0.1869, P@20: 0.05714
+
+2023-11-04 12:52:51,601 - [INFO] - E:135|train_time: 4.852, VALID_time: 0.8904, losses:3.755, losses_emb:5.744e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1381, R@5: 0.09059, P@5: 0.1079
+valid 	 N@10: 0.1407, R@10: 0.1312, P@10: 0.07906
+valid 	 N@15: 0.1491, R@15: 0.162, P@15: 0.06574
+valid 	 N@20: 0.1569, R@20: 0.1871, P@20: 0.05714
+
+2023-11-04 12:52:57,231 - [INFO] - E:136|train_time: 4.846, VALID_time: 0.7345, losses:3.755, losses_emb:5.789e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.138, R@5: 0.09044, P@5: 0.1076
+valid 	 N@10: 0.1407, R@10: 0.1312, P@10: 0.07898
+valid 	 N@15: 0.1491, R@15: 0.1619, P@15: 0.06568
+valid 	 N@20: 0.1568, R@20: 0.1868, P@20: 0.05712
+
+2023-11-04 12:53:03,053 - [INFO] - E:137|train_time: 4.835, VALID_time: 0.9187, losses:3.755, losses_emb:5.835e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.138, R@5: 0.09045, P@5: 0.1076
+valid 	 N@10: 0.1406, R@10: 0.131, P@10: 0.07887
+valid 	 N@15: 0.149, R@15: 0.1618, P@15: 0.06566
+valid 	 N@20: 0.1569, R@20: 0.187, P@20: 0.05716
+
+2023-11-04 12:53:08,738 - [INFO] - E:138|train_time: 4.855, VALID_time: 0.7996, losses:3.754, losses_emb:5.88e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1381, R@5: 0.09059, P@5: 0.1078
+valid 	 N@10: 0.1405, R@10: 0.1309, P@10: 0.07885
+valid 	 N@15: 0.149, R@15: 0.1618, P@15: 0.06565
+valid 	 N@20: 0.1569, R@20: 0.187, P@20: 0.05713
+
+2023-11-04 12:53:14,635 - [INFO] - E:139|train_time: 4.857, VALID_time: 0.992, losses:3.754, losses_emb:5.926e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1381, R@5: 0.0907, P@5: 0.1077
+valid 	 N@10: 0.1406, R@10: 0.1311, P@10: 0.07892
+valid 	 N@15: 0.149, R@15: 0.1619, P@15: 0.06564
+valid 	 N@20: 0.1568, R@20: 0.1869, P@20: 0.05717
+
+2023-11-04 12:53:20,363 - [INFO] - E:140|train_time: 4.799, VALID_time: 0.8981, losses:3.754, losses_emb:5.972e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1379, R@5: 0.09061, P@5: 0.1076
+valid 	 N@10: 0.1405, R@10: 0.1309, P@10: 0.07894
+valid 	 N@15: 0.149, R@15: 0.1619, P@15: 0.06559
+valid 	 N@20: 0.1568, R@20: 0.1869, P@20: 0.05713
+
+2023-11-04 12:53:26,169 - [INFO] - E:141|train_time: 4.87, VALID_time: 0.8868, losses:3.754, losses_emb:6.018e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1382, R@5: 0.09073, P@5: 0.1078
+valid 	 N@10: 0.1406, R@10: 0.1309, P@10: 0.07895
+valid 	 N@15: 0.1492, R@15: 0.1621, P@15: 0.06569
+valid 	 N@20: 0.1569, R@20: 0.1868, P@20: 0.05714
+
+2023-11-04 12:53:31,968 - [INFO] - E:142|train_time: 4.795, VALID_time: 0.9731, losses:3.753, losses_emb:6.064e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.138, R@5: 0.09048, P@5: 0.1076
+valid 	 N@10: 0.1406, R@10: 0.131, P@10: 0.07892
+valid 	 N@15: 0.149, R@15: 0.1618, P@15: 0.06559
+valid 	 N@20: 0.1569, R@20: 0.187, P@20: 0.05716
+
+2023-11-04 12:53:37,991 - [INFO] - E:143|train_time: 4.887, VALID_time: 1.068, losses:3.753, losses_emb:6.109e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1381, R@5: 0.09053, P@5: 0.1076
+valid 	 N@10: 0.1407, R@10: 0.1311, P@10: 0.07901
+valid 	 N@15: 0.1491, R@15: 0.1618, P@15: 0.06563
+valid 	 N@20: 0.1569, R@20: 0.1867, P@20: 0.0571
+
+2023-11-04 12:53:43,877 - [INFO] - E:144|train_time: 4.89, VALID_time: 0.9524, losses:3.753, losses_emb:6.155e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1381, R@5: 0.09066, P@5: 0.1077
+valid 	 N@10: 0.1407, R@10: 0.131, P@10: 0.07901
+valid 	 N@15: 0.1492, R@15: 0.1619, P@15: 0.06568
+valid 	 N@20: 0.1569, R@20: 0.1869, P@20: 0.05718
+
+2023-11-04 12:53:49,675 - [INFO] - E:145|train_time: 4.836, VALID_time: 0.9083, losses:3.753, losses_emb:6.201e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1384, R@5: 0.09085, P@5: 0.1079
+valid 	 N@10: 0.1408, R@10: 0.1311, P@10: 0.07901
+valid 	 N@15: 0.1493, R@15: 0.1619, P@15: 0.06573
+valid 	 N@20: 0.157, R@20: 0.1869, P@20: 0.05712
+
+2023-11-04 12:53:55,490 - [INFO] - E:146|train_time: 4.895, VALID_time: 0.889, losses:3.752, losses_emb:6.247e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1381, R@5: 0.09071, P@5: 0.1077
+valid 	 N@10: 0.1406, R@10: 0.131, P@10: 0.07895
+valid 	 N@15: 0.1491, R@15: 0.1619, P@15: 0.06565
+valid 	 N@20: 0.1568, R@20: 0.1868, P@20: 0.05713
+
+2023-11-04 12:54:01,339 - [INFO] - E:147|train_time: 4.876, VALID_time: 0.9173, losses:3.752, losses_emb:6.292e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1382, R@5: 0.09076, P@5: 0.1078
+valid 	 N@10: 0.1407, R@10: 0.1311, P@10: 0.07894
+valid 	 N@15: 0.1492, R@15: 0.162, P@15: 0.06575
+valid 	 N@20: 0.1569, R@20: 0.1868, P@20: 0.05715
+
+2023-11-04 12:54:07,328 - [INFO] - E:148|train_time: 4.892, VALID_time: 1.052, losses:3.752, losses_emb:6.338e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1382, R@5: 0.09076, P@5: 0.1078
+valid 	 N@10: 0.1408, R@10: 0.1312, P@10: 0.07911
+valid 	 N@15: 0.1491, R@15: 0.1619, P@15: 0.06563
+valid 	 N@20: 0.157, R@20: 0.187, P@20: 0.05721
+
+2023-11-04 12:54:13,793 - [INFO] - E:149|train_time: 4.899, VALID_time: 1.509, losses:3.752, losses_emb:6.384e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.138, R@5: 0.09062, P@5: 0.1077
+valid 	 N@10: 0.1407, R@10: 0.1312, P@10: 0.07906
+valid 	 N@15: 0.149, R@15: 0.1619, P@15: 0.06561
+valid 	 N@20: 0.1569, R@20: 0.187, P@20: 0.05719
+
+2023-11-04 12:54:20,404 - [INFO] - E:150|train_time: 4.797, VALID_time: 1.738, losses:3.752, losses_emb:6.429e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1382, R@5: 0.09073, P@5: 0.1078
+valid 	 N@10: 0.1408, R@10: 0.1312, P@10: 0.07912
+valid 	 N@15: 0.1492, R@15: 0.1618, P@15: 0.06569
+valid 	 N@20: 0.1571, R@20: 0.1874, P@20: 0.05726
+
+2023-11-04 12:54:26,351 - [INFO] - E:151|train_time: 4.842, VALID_time: 1.013, losses:3.751, losses_emb:6.475e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1382, R@5: 0.0907, P@5: 0.1078
+valid 	 N@10: 0.1408, R@10: 0.1311, P@10: 0.07902
+valid 	 N@15: 0.1492, R@15: 0.1619, P@15: 0.06573
+valid 	 N@20: 0.1571, R@20: 0.1873, P@20: 0.05721
+
+2023-11-04 12:54:32,135 - [INFO] - E:152|train_time: 4.881, VALID_time: 0.8489, losses:3.751, losses_emb:6.521e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1383, R@5: 0.09088, P@5: 0.108
+valid 	 N@10: 0.1408, R@10: 0.1313, P@10: 0.07904
+valid 	 N@15: 0.1491, R@15: 0.1617, P@15: 0.06561
+valid 	 N@20: 0.157, R@20: 0.187, P@20: 0.05718
+
+2023-11-04 12:54:37,865 - [INFO] - E:153|train_time: 4.848, VALID_time: 0.8389, losses:3.751, losses_emb:6.567e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1382, R@5: 0.09088, P@5: 0.1079
+valid 	 N@10: 0.1408, R@10: 0.1314, P@10: 0.07915
+valid 	 N@15: 0.1491, R@15: 0.1618, P@15: 0.06567
+valid 	 N@20: 0.1569, R@20: 0.1869, P@20: 0.05714
+
+2023-11-04 12:54:43,629 - [INFO] - E:154|train_time: 4.789, VALID_time: 0.9299, losses:3.751, losses_emb:6.612e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1382, R@5: 0.09071, P@5: 0.1078
+valid 	 N@10: 0.1409, R@10: 0.1315, P@10: 0.0792
+valid 	 N@15: 0.1491, R@15: 0.1618, P@15: 0.06565
+valid 	 N@20: 0.1569, R@20: 0.1868, P@20: 0.05714
+
+2023-11-04 12:54:49,339 - [INFO] - E:155|train_time: 4.816, VALID_time: 0.8548, losses:3.751, losses_emb:6.658e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1381, R@5: 0.09065, P@5: 0.1077
+valid 	 N@10: 0.1408, R@10: 0.1314, P@10: 0.07912
+valid 	 N@15: 0.1491, R@15: 0.1621, P@15: 0.06568
+valid 	 N@20: 0.1569, R@20: 0.187, P@20: 0.0572
+
+2023-11-04 12:54:55,112 - [INFO] - E:156|train_time: 4.817, VALID_time: 0.8978, losses:3.751, losses_emb:6.704e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.138, R@5: 0.0905, P@5: 0.1076
+valid 	 N@10: 0.1407, R@10: 0.1314, P@10: 0.07903
+valid 	 N@15: 0.1491, R@15: 0.1621, P@15: 0.0657
+valid 	 N@20: 0.1569, R@20: 0.1869, P@20: 0.0572
+
+2023-11-04 12:55:00,998 - [INFO] - E:157|train_time: 4.93, VALID_time: 0.903, losses:3.75, losses_emb:6.749e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.138, R@5: 0.09056, P@5: 0.1077
+valid 	 N@10: 0.1407, R@10: 0.1313, P@10: 0.07908
+valid 	 N@15: 0.149, R@15: 0.1618, P@15: 0.06561
+valid 	 N@20: 0.1569, R@20: 0.187, P@20: 0.05717
+
+2023-11-04 12:55:06,862 - [INFO] - E:158|train_time: 4.895, VALID_time: 0.9218, losses:3.75, losses_emb:6.795e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1379, R@5: 0.09043, P@5: 0.1075
+valid 	 N@10: 0.1407, R@10: 0.1314, P@10: 0.0791
+valid 	 N@15: 0.1491, R@15: 0.162, P@15: 0.06572
+valid 	 N@20: 0.1569, R@20: 0.187, P@20: 0.05721
+
+2023-11-04 12:55:12,568 - [INFO] - E:159|train_time: 4.857, VALID_time: 0.8102, losses:3.75, losses_emb:6.841e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.138, R@5: 0.09063, P@5: 0.1077
+valid 	 N@10: 0.1407, R@10: 0.1313, P@10: 0.07911
+valid 	 N@15: 0.149, R@15: 0.1617, P@15: 0.06559
+valid 	 N@20: 0.1569, R@20: 0.1869, P@20: 0.05716
+
+2023-11-04 12:55:18,784 - [INFO] - E:160|train_time: 4.829, VALID_time: 1.331, losses:3.75, losses_emb:6.886e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.138, R@5: 0.09057, P@5: 0.1077
+valid 	 N@10: 0.1406, R@10: 0.1311, P@10: 0.079
+valid 	 N@15: 0.1491, R@15: 0.162, P@15: 0.06573
+valid 	 N@20: 0.1569, R@20: 0.1871, P@20: 0.05719
+
+2023-11-04 12:55:25,390 - [INFO] - E:161|train_time: 4.905, VALID_time: 1.659, losses:3.75, losses_emb:6.932e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.138, R@5: 0.09046, P@5: 0.1077
+valid 	 N@10: 0.1407, R@10: 0.1312, P@10: 0.07908
+valid 	 N@15: 0.1491, R@15: 0.1619, P@15: 0.06566
+valid 	 N@20: 0.157, R@20: 0.1872, P@20: 0.05724
+
+2023-11-04 12:55:31,927 - [INFO] - E:162|train_time: 4.973, VALID_time: 1.495, losses:3.749, losses_emb:6.978e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.138, R@5: 0.09069, P@5: 0.1078
+valid 	 N@10: 0.1405, R@10: 0.131, P@10: 0.07896
+valid 	 N@15: 0.1491, R@15: 0.1621, P@15: 0.06572
+valid 	 N@20: 0.1569, R@20: 0.1871, P@20: 0.05724
+
+2023-11-04 12:55:37,770 - [INFO] - E:163|train_time: 4.802, VALID_time: 0.9372, losses:3.749, losses_emb:7.024e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1382, R@5: 0.09063, P@5: 0.1079
+valid 	 N@10: 0.1407, R@10: 0.1312, P@10: 0.07905
+valid 	 N@15: 0.1491, R@15: 0.162, P@15: 0.06566
+valid 	 N@20: 0.157, R@20: 0.187, P@20: 0.05722
+
+2023-11-04 12:55:43,534 - [INFO] - E:164|train_time: 4.792, VALID_time: 0.9242, losses:3.749, losses_emb:7.069e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1383, R@5: 0.09082, P@5: 0.1079
+valid 	 N@10: 0.1407, R@10: 0.1311, P@10: 0.07893
+valid 	 N@15: 0.1493, R@15: 0.1622, P@15: 0.06577
+valid 	 N@20: 0.1571, R@20: 0.1872, P@20: 0.05728
+
+2023-11-04 12:55:49,841 - [INFO] - E:165|train_time: 4.904, VALID_time: 1.336, losses:3.749, losses_emb:7.115e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1382, R@5: 0.09077, P@5: 0.1079
+valid 	 N@10: 0.1407, R@10: 0.1312, P@10: 0.07908
+valid 	 N@15: 0.1493, R@15: 0.1622, P@15: 0.0658
+valid 	 N@20: 0.1571, R@20: 0.1873, P@20: 0.05728
+
+2023-11-04 12:55:55,848 - [INFO] - E:166|train_time: 4.8, VALID_time: 1.151, losses:3.748, losses_emb:7.161e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1383, R@5: 0.09078, P@5: 0.108
+valid 	 N@10: 0.1408, R@10: 0.1313, P@10: 0.07916
+valid 	 N@15: 0.1493, R@15: 0.1623, P@15: 0.06581
+valid 	 N@20: 0.1571, R@20: 0.1872, P@20: 0.05726
+
+2023-11-04 12:56:02,134 - [INFO] - E:167|train_time: 4.911, VALID_time: 1.319, losses:3.748, losses_emb:7.207e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1381, R@5: 0.0906, P@5: 0.1078
+valid 	 N@10: 0.1409, R@10: 0.1315, P@10: 0.07921
+valid 	 N@15: 0.1492, R@15: 0.1622, P@15: 0.06574
+valid 	 N@20: 0.1569, R@20: 0.187, P@20: 0.05717
+
+2023-11-04 12:56:07,953 - [INFO] - E:168|train_time: 4.895, VALID_time: 0.8551, losses:3.748, losses_emb:7.253e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.138, R@5: 0.09047, P@5: 0.1077
+valid 	 N@10: 0.1407, R@10: 0.1312, P@10: 0.07909
+valid 	 N@15: 0.1492, R@15: 0.162, P@15: 0.06571
+valid 	 N@20: 0.157, R@20: 0.1871, P@20: 0.05722
+
+2023-11-04 12:56:13,720 - [INFO] - E:169|train_time: 4.873, VALID_time: 0.8489, losses:3.748, losses_emb:7.298e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1382, R@5: 0.09062, P@5: 0.1079
+valid 	 N@10: 0.1409, R@10: 0.1313, P@10: 0.07914
+valid 	 N@15: 0.1493, R@15: 0.1622, P@15: 0.06574
+valid 	 N@20: 0.1571, R@20: 0.1871, P@20: 0.0572
+
+2023-11-04 12:56:19,563 - [INFO] - E:170|train_time: 4.864, VALID_time: 0.922, losses:3.747, losses_emb:7.344e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1383, R@5: 0.09078, P@5: 0.1081
+valid 	 N@10: 0.1407, R@10: 0.1311, P@10: 0.07907
+valid 	 N@15: 0.1492, R@15: 0.1621, P@15: 0.06573
+valid 	 N@20: 0.157, R@20: 0.1869, P@20: 0.05722
+
+2023-11-04 12:56:25,314 - [INFO] - E:171|train_time: 4.844, VALID_time: 0.8648, losses:3.747, losses_emb:7.389e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1383, R@5: 0.09073, P@5: 0.108
+valid 	 N@10: 0.1407, R@10: 0.1309, P@10: 0.07899
+valid 	 N@15: 0.1493, R@15: 0.1621, P@15: 0.06573
+valid 	 N@20: 0.1571, R@20: 0.1872, P@20: 0.05723
+
+2023-11-04 12:56:31,058 - [INFO] - E:172|train_time: 4.86, VALID_time: 0.8234, losses:3.747, losses_emb:7.435e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1383, R@5: 0.09086, P@5: 0.108
+valid 	 N@10: 0.1408, R@10: 0.1312, P@10: 0.07914
+valid 	 N@15: 0.1492, R@15: 0.1619, P@15: 0.06568
+valid 	 N@20: 0.1571, R@20: 0.1873, P@20: 0.05723
+
+2023-11-04 12:56:37,007 - [INFO] - E:173|train_time: 4.995, VALID_time: 0.9077, losses:3.747, losses_emb:7.481e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1383, R@5: 0.09097, P@5: 0.108
+valid 	 N@10: 0.1408, R@10: 0.1313, P@10: 0.07909
+valid 	 N@15: 0.1493, R@15: 0.1622, P@15: 0.06578
+valid 	 N@20: 0.157, R@20: 0.1873, P@20: 0.0572
+
+2023-11-04 12:56:42,794 - [INFO] - E:174|train_time: 4.92, VALID_time: 0.8176, losses:3.747, losses_emb:7.527e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1383, R@5: 0.09095, P@5: 0.108
+valid 	 N@10: 0.1409, R@10: 0.1315, P@10: 0.07926
+valid 	 N@15: 0.1492, R@15: 0.1619, P@15: 0.0657
+valid 	 N@20: 0.157, R@20: 0.187, P@20: 0.05718
+
+2023-11-04 12:56:48,618 - [INFO] - E:175|train_time: 4.873, VALID_time: 0.9209, losses:3.747, losses_emb:7.572e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1383, R@5: 0.09088, P@5: 0.108
+valid 	 N@10: 0.1408, R@10: 0.1312, P@10: 0.07907
+valid 	 N@15: 0.1492, R@15: 0.162, P@15: 0.06567
+valid 	 N@20: 0.157, R@20: 0.1871, P@20: 0.0572
+
+2023-11-04 12:56:54,236 - [INFO] - E:176|train_time: 4.788, VALID_time: 0.8004, losses:3.746, losses_emb:7.618e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1383, R@5: 0.09091, P@5: 0.108
+valid 	 N@10: 0.1408, R@10: 0.1312, P@10: 0.07902
+valid 	 N@15: 0.1492, R@15: 0.1621, P@15: 0.0657
+valid 	 N@20: 0.157, R@20: 0.187, P@20: 0.05718
+
+2023-11-04 12:57:00,017 - [INFO] - E:177|train_time: 4.85, VALID_time: 0.8805, losses:3.746, losses_emb:7.664e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1383, R@5: 0.09086, P@5: 0.108
+valid 	 N@10: 0.1408, R@10: 0.1313, P@10: 0.07907
+valid 	 N@15: 0.1492, R@15: 0.1621, P@15: 0.06568
+valid 	 N@20: 0.157, R@20: 0.1872, P@20: 0.05718
+
+2023-11-04 12:57:05,798 - [INFO] - E:178|train_time: 4.829, VALID_time: 0.9043, losses:3.746, losses_emb:7.71e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1382, R@5: 0.09086, P@5: 0.108
+valid 	 N@10: 0.1409, R@10: 0.1315, P@10: 0.07925
+valid 	 N@15: 0.1491, R@15: 0.162, P@15: 0.0657
+valid 	 N@20: 0.157, R@20: 0.1872, P@20: 0.05719
+
+2023-11-04 12:57:11,442 - [INFO] - E:179|train_time: 4.808, VALID_time: 0.7888, losses:3.746, losses_emb:7.755e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1384, R@5: 0.09107, P@5: 0.1081
+valid 	 N@10: 0.1409, R@10: 0.1315, P@10: 0.07927
+valid 	 N@15: 0.1491, R@15: 0.1619, P@15: 0.06567
+valid 	 N@20: 0.1569, R@20: 0.187, P@20: 0.05715
+
+2023-11-04 12:57:17,032 - [INFO] - E:180|train_time: 4.748, VALID_time: 0.8117, losses:3.746, losses_emb:7.801e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1383, R@5: 0.09096, P@5: 0.108
+valid 	 N@10: 0.1408, R@10: 0.1314, P@10: 0.07913
+valid 	 N@15: 0.1492, R@15: 0.162, P@15: 0.06564
+valid 	 N@20: 0.157, R@20: 0.187, P@20: 0.05716
+
+2023-11-04 12:57:22,777 - [INFO] - E:181|train_time: 4.828, VALID_time: 0.8842, losses:3.746, losses_emb:7.847e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1382, R@5: 0.09074, P@5: 0.1079
+valid 	 N@10: 0.1408, R@10: 0.1313, P@10: 0.07918
+valid 	 N@15: 0.1492, R@15: 0.162, P@15: 0.06571
+valid 	 N@20: 0.157, R@20: 0.1871, P@20: 0.05717
+
+2023-11-04 12:57:28,818 - [INFO] - E:182|train_time: 4.859, VALID_time: 1.114, losses:3.745, losses_emb:7.892e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1381, R@5: 0.0907, P@5: 0.1078
+valid 	 N@10: 0.1409, R@10: 0.1317, P@10: 0.07929
+valid 	 N@15: 0.1492, R@15: 0.162, P@15: 0.06573
+valid 	 N@20: 0.157, R@20: 0.1871, P@20: 0.05721
+
+2023-11-04 12:57:34,538 - [INFO] - E:183|train_time: 4.738, VALID_time: 0.9412, losses:3.745, losses_emb:7.938e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1384, R@5: 0.09094, P@5: 0.108
+valid 	 N@10: 0.141, R@10: 0.1316, P@10: 0.07924
+valid 	 N@15: 0.1493, R@15: 0.1621, P@15: 0.06574
+valid 	 N@20: 0.1571, R@20: 0.1871, P@20: 0.05724
+
+2023-11-04 12:57:40,289 - [INFO] - E:184|train_time: 4.782, VALID_time: 0.8933, losses:3.745, losses_emb:7.984e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1382, R@5: 0.09084, P@5: 0.1078
+valid 	 N@10: 0.1408, R@10: 0.1314, P@10: 0.07917
+valid 	 N@15: 0.1494, R@15: 0.1624, P@15: 0.06586
+valid 	 N@20: 0.157, R@20: 0.187, P@20: 0.0572
+
+2023-11-04 12:57:46,014 - [INFO] - E:185|train_time: 4.769, VALID_time: 0.9127, losses:3.745, losses_emb:8.029e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1385, R@5: 0.09093, P@5: 0.108
+valid 	 N@10: 0.1409, R@10: 0.1312, P@10: 0.0791
+valid 	 N@15: 0.1494, R@15: 0.1622, P@15: 0.06577
+valid 	 N@20: 0.1573, R@20: 0.1873, P@20: 0.05725
+
+2023-11-04 12:57:52,025 - [INFO] - E:186|train_time: 4.803, VALID_time: 1.157, losses:3.745, losses_emb:8.075e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1384, R@5: 0.09077, P@5: 0.1078
+valid 	 N@10: 0.1411, R@10: 0.1315, P@10: 0.07927
+valid 	 N@15: 0.1494, R@15: 0.162, P@15: 0.06572
+valid 	 N@20: 0.1572, R@20: 0.1871, P@20: 0.05722
+
+2023-11-04 12:57:57,763 - [INFO] - E:187|train_time: 4.795, VALID_time: 0.9, losses:3.745, losses_emb:8.121e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1385, R@5: 0.09087, P@5: 0.108
+valid 	 N@10: 0.1411, R@10: 0.1315, P@10: 0.07926
+valid 	 N@15: 0.1495, R@15: 0.1622, P@15: 0.0658
+valid 	 N@20: 0.1573, R@20: 0.1871, P@20: 0.05725
+
+2023-11-04 12:58:03,264 - [INFO] - E:188|train_time: 4.702, VALID_time: 0.7523, losses:3.744, losses_emb:8.166e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1385, R@5: 0.09098, P@5: 0.108
+valid 	 N@10: 0.141, R@10: 0.1313, P@10: 0.07915
+valid 	 N@15: 0.1494, R@15: 0.1622, P@15: 0.06578
+valid 	 N@20: 0.1572, R@20: 0.1871, P@20: 0.05722
+
+2023-11-04 12:58:09,144 - [INFO] - E:189|train_time: 4.791, VALID_time: 1.044, losses:3.744, losses_emb:8.212e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1383, R@5: 0.09084, P@5: 0.1079
+valid 	 N@10: 0.1409, R@10: 0.1314, P@10: 0.07914
+valid 	 N@15: 0.1493, R@15: 0.162, P@15: 0.06574
+valid 	 N@20: 0.1571, R@20: 0.187, P@20: 0.0572
+
+2023-11-04 12:58:14,842 - [INFO] - E:190|train_time: 4.801, VALID_time: 0.8529, losses:3.744, losses_emb:8.258e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1384, R@5: 0.09091, P@5: 0.108
+valid 	 N@10: 0.1408, R@10: 0.1312, P@10: 0.07905
+valid 	 N@15: 0.1493, R@15: 0.1621, P@15: 0.06577
+valid 	 N@20: 0.1571, R@20: 0.1869, P@20: 0.05718
+
+2023-11-04 12:58:20,625 - [INFO] - E:191|train_time: 4.796, VALID_time: 0.9448, losses:3.744, losses_emb:8.304e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1382, R@5: 0.0907, P@5: 0.1078
+valid 	 N@10: 0.1408, R@10: 0.1311, P@10: 0.07895
+valid 	 N@15: 0.1493, R@15: 0.162, P@15: 0.06573
+valid 	 N@20: 0.1571, R@20: 0.187, P@20: 0.05723
+
+2023-11-04 12:58:26,295 - [INFO] - E:192|train_time: 4.802, VALID_time: 0.8146, losses:3.744, losses_emb:8.349e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1384, R@5: 0.09089, P@5: 0.1079
+valid 	 N@10: 0.1409, R@10: 0.1312, P@10: 0.07899
+valid 	 N@15: 0.1494, R@15: 0.1621, P@15: 0.06575
+valid 	 N@20: 0.1572, R@20: 0.1871, P@20: 0.05723
+
+2023-11-04 12:58:31,998 - [INFO] - E:193|train_time: 4.745, VALID_time: 0.9011, losses:3.744, losses_emb:8.395e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1383, R@5: 0.09092, P@5: 0.1079
+valid 	 N@10: 0.1408, R@10: 0.1312, P@10: 0.07908
+valid 	 N@15: 0.1493, R@15: 0.1621, P@15: 0.06569
+valid 	 N@20: 0.157, R@20: 0.1869, P@20: 0.05719
+
+2023-11-04 12:58:37,953 - [INFO] - E:194|train_time: 4.871, VALID_time: 1.055, losses:3.743, losses_emb:8.441e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1383, R@5: 0.09084, P@5: 0.1079
+valid 	 N@10: 0.1408, R@10: 0.1311, P@10: 0.079
+valid 	 N@15: 0.1494, R@15: 0.1622, P@15: 0.06577
+valid 	 N@20: 0.1571, R@20: 0.1871, P@20: 0.05726
+
+2023-11-04 12:58:43,530 - [INFO] - E:195|train_time: 4.735, VALID_time: 0.7948, losses:3.744, losses_emb:8.486e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1383, R@5: 0.09074, P@5: 0.1078
+valid 	 N@10: 0.1409, R@10: 0.1313, P@10: 0.07905
+valid 	 N@15: 0.1494, R@15: 0.1622, P@15: 0.06577
+valid 	 N@20: 0.1572, R@20: 0.1872, P@20: 0.05723
+
+2023-11-04 12:58:49,202 - [INFO] - E:196|train_time: 4.791, VALID_time: 0.8324, losses:3.743, losses_emb:8.532e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1385, R@5: 0.09093, P@5: 0.1079
+valid 	 N@10: 0.1409, R@10: 0.1311, P@10: 0.07904
+valid 	 N@15: 0.1495, R@15: 0.1624, P@15: 0.0658
+valid 	 N@20: 0.1572, R@20: 0.1871, P@20: 0.05725
+
+2023-11-04 12:58:54,884 - [INFO] - E:197|train_time: 4.829, VALID_time: 0.8252, losses:3.743, losses_emb:8.578e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1383, R@5: 0.09062, P@5: 0.1078
+valid 	 N@10: 0.1408, R@10: 0.1311, P@10: 0.07896
+valid 	 N@15: 0.1494, R@15: 0.1622, P@15: 0.06577
+valid 	 N@20: 0.1571, R@20: 0.1869, P@20: 0.05717
+
+2023-11-04 12:59:00,810 - [INFO] - E:198|train_time: 4.844, VALID_time: 1.028, losses:3.743, losses_emb:8.623e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1385, R@5: 0.09094, P@5: 0.1081
+valid 	 N@10: 0.141, R@10: 0.1313, P@10: 0.07916
+valid 	 N@15: 0.1495, R@15: 0.1624, P@15: 0.06583
+valid 	 N@20: 0.1572, R@20: 0.187, P@20: 0.0572
+
+2023-11-04 12:59:06,623 - [INFO] - E:199|train_time: 4.788, VALID_time: 0.968, losses:3.743, losses_emb:8.669e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1385, R@5: 0.09085, P@5: 0.108
+valid 	 N@10: 0.141, R@10: 0.1314, P@10: 0.07917
+valid 	 N@15: 0.1495, R@15: 0.1622, P@15: 0.06576
+valid 	 N@20: 0.1572, R@20: 0.187, P@20: 0.05721
+
+2023-11-04 12:59:12,367 - [INFO] - E:200|train_time: 4.813, VALID_time: 0.8891, losses:3.743, losses_emb:8.715e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1385, R@5: 0.09087, P@5: 0.1081
+valid 	 N@10: 0.141, R@10: 0.1313, P@10: 0.07916
+valid 	 N@15: 0.1494, R@15: 0.1623, P@15: 0.0658
+valid 	 N@20: 0.1572, R@20: 0.1871, P@20: 0.05723
+
+2023-11-04 12:59:18,307 - [INFO] - E:201|train_time: 4.959, VALID_time: 0.9094, losses:3.743, losses_emb:8.76e-05, best_valid(recall@20): 0.1874
+valid 	 N@5: 0.1385, R@5: 0.09091, P@5: 0.1081
+valid 	 N@10: 0.1411, R@10: 0.1316, P@10: 0.07922
+valid 	 N@15: 0.1495, R@15: 0.1623, P@15: 0.06578
+valid 	 N@20: 0.1572, R@20: 0.1872, P@20: 0.05726
+
+2023-11-04 12:59:18,307 - [INFO] - start to test!!
+
+2023-11-04 12:59:18,818 - [INFO] - 
+TEST 	 N@5: 0.1382, R@5: 0.09073, P@5: 0.1078
+TEST 	 N@10: 0.1408, R@10: 0.1312, P@10: 0.07912
+TEST 	 N@15: 0.1492, R@15: 0.1618, P@15: 0.06569
+TEST 	 N@20: 0.1571, R@20: 0.1874, P@20: 0.05726
+
