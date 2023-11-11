@@ -1,8 +1,3 @@
-'''
-Created on October 1, 2020
-
-@author: Tinglin Huang (huangtinglin@outlook.com)
-'''
 from ast import arg
 from functools import reduce
 from tarfile import POSIX_MAGIC
@@ -93,87 +88,26 @@ class lgn_frame(nn.Module):
         self.edge_dropout_rate = args_config.edge_dropout_rate
         self.pool = args_config.pool
         self.n_negs = args_config.n_negs
-        self.ns = args_config.ns
-        self.K = args_config.K
-        self.tau_plus = args_config.tau_plus
-        # self.temperature = args_config.temperature
+        self.temperature = args_config.temperature
         self.temperature_1 = args_config.temperature
         self.temperature_2 = args_config.temperature_2
         self.temperature_3 = args_config.temperature_3
-        self.m = args_config.m
         self.beta = args_config.beta
         self.device = torch.device("cuda:0") if args_config.cuda else torch.device("cpu")
-        self.group_num = args_config.group_num
-        # param for norm
         self.u_norm = args_config.u_norm
         self.i_norm = args_config.i_norm
-        self.mix_replace = args_config.mix_replace
-        self.n_negs = args_config.n_negs
-        if args_config.trans_mode == "gd":
-            self.temperature = nn.Parameter(torch.FloatTensor([args_config.temperature]))
-        elif args_config.trans_mode == "newton":
-            # self.temperature = torch.full((args_config.batch_size,), device=self.device)
-            # self.temperature = torch.tensor([args_config.temperature], device=self.device)
-            # self.temperature = self.temperature.float()
-            print("NEWTON!!!")
-        else:
-            self.temperature = args_config.temperature
-        self.eta = args_config.temperature_2
-        self.cnt_lr = args_config.cnt_lr
         self.generate_mode= args_config.generate_mode
-        self.tau_min = args_config.tau_min
         # init  setting
         self._init_weight()
         self.user_embed = nn.Parameter(self.user_embed)
         self.item_embed = nn.Parameter(self.item_embed)
         self.mode = args_config.pos_mode
-        self.item_group_idx = item_group_idx
-        self.group_mix_mode = args_config.group_mix_mode
         # define loss function
+        self.loss_fn = losses.Pos_DROLoss(self.temperature_1, self.temperature_2, self.temperature_3, args_config.loss_re, self.mode, self.device)
         self.loss_name = args_config.loss_fn
-        if self.loss_name == "PairwiseLogisticDROLoss":
-            self.loss_fn = losses.PairwiseLogisticDROLoss()
-        elif self.loss_name == "PairwiseLogisticEasyLoss":
-            self.loss_fn = losses.PairwiseLogisticEasyLoss()
-        elif self.loss_name == "PairwiseLogisticDRO2Loss":
-            self.loss_fn = losses.PairwiseLogisticDRO2Loss()
-        elif self.loss_name == "PairwiseLogisticDRO3Loss":
-            self.loss_fn = losses.PairwiseLogisticDRO3Loss()
-        elif self.loss_name == "BCEDROLoss":
-            self.loss_fn = losses.BCEDROLoss()
-        elif self.loss_name == "BCEDRO2Loss":
-            self.loss_fn = losses.BCEDRO2Loss()
-        elif self.loss_name == "InforNCEPosDROLoss":
-            self.loss_fn = losses.InforNCEPosDROLoss(self.temperature_1, self.temperature_2, self.temperature_3)
-        elif self.loss_name == "Pos_DROLoss":
-            self.loss_fn = losses.Pos_DROLoss(self.temperature_1, self.temperature_2, self.temperature_3, args_config.loss_re, self.mode, self.device)
-        elif self.loss_name == "DRO_reweightLoss":
-            self.loss_fn = losses.DRO_reweightLoss(self.temperature_1, self.temperature_2, self.temperature_3)
-        elif self.loss_name == "DCL_Loss":
-            self.loss_fn = losses.DCL_Loss(self.temperature, self.temperature_2)
-        elif self.loss_name == "DORO_Loss":
-            self.loss_fn = losses.DORO_Loss(self.temperature, self.temperature_2)
-        elif self.loss_name == "CosineContrastiveLoss":
-            self.loss_fn = losses.CosineContrastiveLoss(self.temperature, self.temperature_2)
-        elif self.loss_name == "BCELoss":
-            self.loss_fn = losses.BCELoss()
-        elif self.loss_name == "BPRLoss":
-            self.loss_fn = losses.BPRLoss()
-        elif self.loss_name == "MSELoss":
-            self.loss_fn = losses.MSELoss()
-        else:
-            raise NotImplementedError
         self.gcn = self._init_model()
         self.sampling_method = args_config.sampling_method
         print("sample method is {}".format(self.sampling_method))
-        
-        if train_cf_len is not None:
-            pos_label_1 = torch.ones(args_config.batch_size).to(self.device) # [B]
-            neg_label_1 = torch.zeros(args_config.batch_size, args_config.n_negs).to(self.device) # [B M]
-            self.label_1 = torch.cat([pos_label_1.unsqueeze(1), neg_label_1], dim=1)
-            pos_label_2 = torch.ones(train_cf_len % args_config.batch_size).to(self.device) # [B]
-            neg_label_2 = torch.zeros(train_cf_len % args_config.batch_size, args_config.n_negs).to(self.device) # [B M]
-            self.label_2 = torch.cat([pos_label_2.unsqueeze(1), neg_label_2], dim=1)
             
     def _init_weight(self):
         initializer = nn.init.xavier_uniform_
@@ -219,28 +153,7 @@ class lgn_frame(nn.Module):
             item_e = F.normalize(item_e, dim=-1)
 
         y_pred = torch.bmm(item_e, u_e.unsqueeze(-1)).squeeze(-1) # [B M+1]
-        
-        if self.loss_name == "PairwiseLogisticDROLoss" or self.loss_name == "PairwiseLogisticDRO2Loss" or self.loss_name == "PairwiseLogisticDRO3Loss" \
-            or self.loss_name == "BCEDROLoss" or self.loss_name == "BCEDRO2Loss":
-            loss  = self.loss_fn(y_pred, self.temperature.detach(), self.eta)
-        elif self.loss_name == "PairwiseLogisticEasyLoss":
-            loss = self.loss_fn(y_pred, self.temperature)
-        elif self.loss_name == "Pos_DROLoss":
-            loss, neg_rate = self.loss_fn(y_pred, user)
-        elif self.loss_name == "CosineContrastiveLoss":
-            loss = self.loss_fn(y_pred)
-            neg_rate = 0.
-        elif self.loss_name == "MSELoss" or self.loss_name == "BPRLoss":
-            neg_rate = 0.
-            loss = self.loss_fn(y_pred)
-        elif self.loss_name == "BCELoss":
-            neg_rate = 0.
-            if step == 1:
-                loss = self.loss_fn(y_pred, self.label_2)
-            else:
-                loss = self.loss_fn(y_pred, self.label_1)
-        else:
-            loss, neg_rate = self.loss_fn(y_pred)
+        loss, neg_rate = self.loss_fn(y_pred, user)
         # cul regularizer
         regularize = (torch.norm(user_gcn_emb[:, :]) ** 2
                        + torch.norm(pos_gcn_emb[:, :]) ** 2
@@ -295,43 +208,9 @@ class lgn_frame(nn.Module):
         y_pred = torch.mm(u_e, pos_e.t().contiguous())
         y_pred[row_swap, col_before] = y_pred[row_swap, col_after]
         neg_rate = None
-        if self.loss_name == "PairwiseLogisticDROLoss" or self.loss_name == "PairwiseLogisticDRO2Loss" or self.loss_name == "PairwiseLogisticDRO3Loss" \
-            or self.loss_name == "BCEDROLoss" or self.loss_name == "BCEDRO2Loss":
-            loss  = self.loss_fn(y_pred, self.temperature.detach(), self.eta)
-        elif self.loss_name == "PairwiseLogisticEasyLoss":
-            loss = self.loss_fn(y_pred, self.temperature)
-        elif self.loss_name == "Pos_DROLoss":
-            loss, neg_rate = self.loss_fn(y_pred, user)
-        elif self.loss_name == "CosineContrastiveLoss":
-            loss = self.loss_fn(y_pred)
-        else:
-            loss, neg_rate = self.loss_fn(y_pred)
+        loss, neg_rate = self.loss_fn(y_pred, user)
         # cul regularizer
         regularize = (torch.norm(user_gcn_emb[:, :]) ** 2
                        + torch.norm(pos_gcn_emb[:, :]) ** 2) / 2  # take hop=0
-        emb_loss = self.decay * regularize / batch_size
-        # pos_neg_score
-        # pos_score = y_pred[:, 0].view(-1, 1).half().cpu().detach().numpy()
-        # neg_score = y_pred[:, 1:].mean(dim=-1, keepdim=True).half().cpu().detach().numpy()
-        # gap_score = torch.mean(torch.exp(y_pred[:, 1:] / self.temperature_1 - y_pred[:, 0:1] / self.temperature_1), dim=-1, keepdim=True).half().cpu().detach().numpy()
-        # scores = np.concatenate((pos_score, gap_score, neg_score), axis=1)
+        emb_loss = self.decay * regularize / batch_size 
         return loss + emb_loss, emb_loss, neg_rate
-
-    def cal_loss_I(self, users, pos_items):
-        device = self.device
-        neighbor_embeds = self.item_embeds(self.ii_neighbor_mat[pos_items])    # len(pos_items) * num_neighbors * dim
-        sim_scores = self.ii_constraint_mat[pos_items]  # len(pos_items) * num_neighbors
-        user_embeds = self.user_embeds(users).unsqueeze(1)
-        
-        loss = -sim_scores * (user_embeds * neighbor_embeds).sum(dim=-1).sigmoid().log()
-      
-        # loss = loss.sum(-1)
-        return loss.sum()
-
-def get_negative_mask(batch_size):
-    negative_mask = torch.ones((batch_size, batch_size), dtype=bool)
-    for i in range(batch_size):
-        negative_mask[i, i] = 0
-
-    # negative_mask = torch.cat((negative_mask, negative_mask), 0)
-    return negative_mask

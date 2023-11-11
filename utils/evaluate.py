@@ -58,32 +58,10 @@ def test_sp(model, user_dict, sp_mat, n_params, valid_pre, test_pre, item_group_
     for u_batch_id in range(n_user_batchs):
         user_list = test_users[u_batch_id * u_batch_size: (u_batch_id + 1) * u_batch_size]
         user_batch = torch.LongTensor(np.array(user_list)).to(device)
-        if args.gnn == 'lightgcn_byol':
-            u_g_embeddings_online = u_online[user_batch]
-            u_g_embeddings_target = u_target[user_batch]
-            i_g_embddings_online = i_online
-            i_g_embddings_target = i_target
-            scores = model.rating(u_g_embeddings_online, i_g_embddings_target,
-                                      u_g_embeddings_target, i_g_embddings_online)
-        elif args.pos_mode == "cml":
-            u_g_embeddings = user_gcn_emb[user_batch]
-            i_g_embddings = item_gcn_emb
-            scores = model.rating2(u_g_embeddings, i_g_embddings)
-        else:
-            if args.gnn == "Ultra_gcn":
-                u_g_embeddings = user_gcn_emb[user_batch]
-            else:
-                u_g_embeddings = user_gcn_emb[user_batch]
-            i_g_embddings = item_gcn_emb
-            scores = model.rating(u_g_embeddings, i_g_embddings)
-        # original test
-        # rate_batch = scores.detach().cpu().numpy()
-        # rate_batch[train_sp_mat[user_list].nonzero()] = -np.inf
-        # ground_truth_batch = test_sp_mat[user_list]
-        # for m in metrics:
-        #     m['score'].append(m['metric'](rate_batch, ground_truth_batch, k=m['k']))
-        # new valid
-        # swap 
+
+        u_g_embeddings = user_gcn_emb[user_batch]
+        i_g_embddings = item_gcn_emb
+        scores = model.rating(u_g_embeddings, i_g_embddings)
         swap_idx = uid2swap_idx[user_list]
         rev_swap_idx = uid2rev_swap_idx[user_list]
 
@@ -94,10 +72,6 @@ def test_sp(model, user_dict, sp_mat, n_params, valid_pre, test_pre, item_group_
         scores[train_sp_mat[user_list].nonzero()] = -np.inf
         # start to calculate the long tail evaluation
         if args.restore and args.group_valid:
-            # batch_group = []
-            # print(pos_len_list)
-            # print(pos_len_list.shape)
-            # num_test_per_user = pos_len_list[user_list]
             num_test_per_user = pos_len_list[u_batch_id * u_batch_size: (u_batch_id + 1) * u_batch_size]
             num_test_per_user_inv = np.power(num_test_per_user, -1.)
             num_test_per_user_inv[np.isinf(num_test_per_user_inv)] = 1.
@@ -124,7 +98,6 @@ def test_sp(model, user_dict, sp_mat, n_params, valid_pre, test_pre, item_group_
         batch_matrix_list.append(topk_idx)
 
     topk_idx_batch = torch.cat(batch_matrix_list, dim=0).cpu().numpy()
-    # pos_len_list = np.array([test_sp_mat[i].nnz for i in range(n_test_users)])
     
     pos_idx_matrix = topk_idx_batch < pos_len_list.reshape(-1, 1)
     # matrix cal
@@ -132,8 +105,6 @@ def test_sp(model, user_dict, sp_mat, n_params, valid_pre, test_pre, item_group_
         mean_ndcg = ndcg_(pos_idx_matrix, pos_len_list)
         mean_recall = recall_(pos_idx_matrix, pos_len_list)
         mean_precision = precision_(pos_idx_matrix, pos_len_list).mean(axis=0)
-        # np.save("./scores/{}_recall_per_user.npy".format(args.name), mean_recall[:, 20 - 1])
-        # np.save("./scores/{}_ndcg_per_user.npy".format(args.name), mean_ndcg[:, 20 - 1])
         batch_group = np.concatenate(batch_group, axis=0)
         batch_group = batch_group.mean(axis=0)
         for i in batch_group:
@@ -149,116 +120,6 @@ def test_sp(model, user_dict, sp_mat, n_params, valid_pre, test_pre, item_group_
         mean_ndcg = ndcg_(pos_idx_matrix, pos_len_list).mean(axis=0)
         mean_recall = recall_(pos_idx_matrix, pos_len_list).mean(axis=0)
         mean_precision = precision_(pos_idx_matrix, pos_len_list).mean(axis=0)  
-    # print("CUDA\t ndcg20:{}\trecall:{}".format(ndcg20, recall20))
-
-
-    # for m in metrics:
-    #     m['score'] = np.concatenate(m['score']).mean()
-
-    return (mean_ndcg, mean_recall, mean_precision)
-
-def test_sp2(model, user_dict, sp_mat, n_params, valid_pre, test_pre, item_group_idx=None, mode='test'):
-    global n_users, n_items
-    n_users = n_params['n_users']
-    n_items = n_params['n_items']
-
-    global train_user_set, test_user_set
-    train_user_set = user_dict['train_user_set']
-    if mode == 'test':
-        test_user_set = user_dict['test_user_set']
-    else:
-        test_user_set = user_dict['valid_user_set']
-        if test_user_set is None:
-            test_user_set = user_dict['test_user_set']
-    train_sp_mat = sp_mat['train_sp_mat']
-    if mode == 'test':
-        test_sp_mat = sp_mat['test_sp_mat']
-        uid2swap_idx, uid2rev_swap_idx, pos_len_list = test_pre
-    else:
-        test_sp_mat = sp_mat['valid_sp_mat']
-        uid2swap_idx, uid2rev_swap_idx, pos_len_list = valid_pre
-
-    pos_len_list = np.array(pos_len_list)
-    u_batch_size = BATCH_SIZE
-    i_batch_size = BATCH_SIZE
-
-    test_users = list(test_user_set.keys())
-    n_test_users = len(test_users)
-    n_user_batchs = n_test_users // u_batch_size + 1
-    if args.gnn == 'lightgcn_byol':
-        u_online, u_target, i_online, i_target = model.generate()
-
-    else:
-        user_gcn_emb, item_gcn_emb = model.generate(mode)
-    Ks = eval(args.Ks)
-    batch_matrix_list = []
-    batch_group = []
-    for u_batch_id in range(n_user_batchs):
-        user_list = test_users[u_batch_id * u_batch_size: (u_batch_id + 1) * u_batch_size]
-        user_batch = torch.LongTensor(np.array(user_list)).to(device)
-        test_sp_index = torch.LongTensor(test_sp_mat[user_list].todense()).to(device)
-
-        if args.gnn == 'lightgcn_byol':
-            u_g_embeddings_online = u_online[user_batch]
-            u_g_embeddings_target = u_target[user_batch]
-            i_g_embddings_online = i_online
-            i_g_embddings_target = i_target
-            scores = model.rating(u_g_embeddings_online, i_g_embddings_target,
-                                      u_g_embeddings_target, i_g_embddings_online)
-        elif args.pos_mode == "cml":
-            u_g_embeddings = user_gcn_emb[user_batch]
-            i_g_embddings = item_gcn_emb
-            scores = model.rating2(u_g_embeddings, i_g_embddings)
-        else:
-            if args.gnn == "Ultra_gcn":
-                u_g_embeddings = user_gcn_emb[user_batch]
-            else:
-                u_g_embeddings = user_gcn_emb[user_batch]
-            i_g_embddings = item_gcn_emb
-            scores = model.rating(u_g_embeddings, i_g_embddings)
-        # original test
-        # rate_batch = scores.detach().cpu().numpy()
-        # rate_batch[train_sp_mat[user_list].nonzero()] = -np.inf
-        # ground_truth_batch = test_sp_mat[user_list]
-        # for m in metrics:
-        #     m['score'].append(m['metric'](rate_batch, ground_truth_batch, k=m['k']))
-        # new valid
-        # swap 
-        # fill
-        scores[train_sp_mat[user_list].nonzero()] = -np.inf
-        _, topk_idx = torch.topk(scores, max(Ks), dim=-1)  # B * K
-        index_after = torch.gather(test_sp_index, dim=1, index=topk_idx)
-        batch_matrix_list.append(index_after)
-        mat = test_sp_mat[user_list]
-        # ipdb.set_trace()
-    topk_idx_batch = torch.cat(batch_matrix_list, dim=0).cpu().numpy()
-    pos_idx_matrix = topk_idx_batch
-    # matrix cal
-    if args.restore and args.group_valid:
-        mean_ndcg = ndcg_(pos_idx_matrix, pos_len_list)
-        mean_recall = recall_(pos_idx_matrix, pos_len_list)
-        mean_precision = precision_(pos_idx_matrix, pos_len_list).mean(axis=0)
-        # np.save("./scores/{}_recall_per_user.npy".format(args.name), mean_recall[:, 20 - 1])
-        # np.save("./scores/{}_ndcg_per_user.npy".format(args.name), mean_ndcg[:, 20 - 1])
-        batch_group = np.concatenate(batch_group, axis=0)
-        batch_group = batch_group.mean(axis=0)
-        for i in batch_group:
-            print(i)
-        print("mean is {:.3}".format(batch_group.mean()))
-        dict_file = {"recall_per_user": mean_recall[:, 20 - 1], 
-                    "ndcg_per_user": mean_ndcg[:, 20 - 1], "batch_group":batch_group}
-        mean_ndcg = mean_ndcg.mean(axis=0)
-        mean_recall = mean_recall.mean(axis=0)
-        with open("/data/wujk/codes/LDS7_0621/outputs/scores/{}_dict.pkl".format(args.name), "wb") as f:
-            pickle.dump(dict_file, f)
-    else:
-        mean_ndcg = ndcg_(pos_idx_matrix, pos_len_list).mean(axis=0)
-        mean_recall = recall_(pos_idx_matrix, pos_len_list).mean(axis=0)
-        mean_precision = precision_(pos_idx_matrix, pos_len_list).mean(axis=0)  
-    # print("CUDA\t ndcg20:{}\trecall:{}".format(ndcg20, recall20))
-
-    # for m in metrics:
-    #     m['score'] = np.concatenate(m['score']).mean()
 
     return (mean_ndcg, mean_recall, mean_precision)
 

@@ -24,20 +24,6 @@ import torch.autograd as autograd
 n_users = 0
 n_items = 0
 def get_logger(name, log_dir, config_dir):
-    """
-    Creates a logger object
-
-    Parameters
-    ----------
-    name:           Name of the logger file
-    log_dir:        Directory where logger file needs to be stored
-    config_dir:     Directory from where log_config.json needs to be read
-    
-    Returns
-    -------
-    A logger object which writes to both file and stdout
-        
-    """
     config_dict = json.load(open( config_dir + 'log_config.json'))
     config_dict['handlers']['file_handler']['filename'] = log_dir + name.replace('/', '-')
     logging.config.dictConfig(config_dict)
@@ -264,33 +250,16 @@ if __name__ == '__main__':
         args.log_dir = new_log_dir
     logger = get_logger(args.name, args.log_dir, args.config_dir)
     logger.info(vars(args))
-    """build dataset"""
-    if args.dataset == 'ciao':
-        train_cf, user_dict, sp_matrix, n_params, norm_mat, valid_pre, test_pre = load_data_ciao(args, train_ratio=\
-            args.train_ratio, min_count=[5, 5], logger=logger)
-    elif args.dataset == 'citeulike':
-        train_cf, user_dict, sp_matrix, n_params, norm_mat, valid_pre, test_pre = load_data_ciao(args, train_ratio=\
-            args.train_ratio, min_count=[5, 0], logger=logger)
-    elif args.dataset == "ali":
-        train_cf, user_dict, sp_matrix, n_params, norm_mat, valid_pre, test_pre = load_data_ciao(args, train_ratio=\
-            args.train_ratio, min_count=[10, 10], logger=logger)
-    else:
-        train_cf, user_dict, sp_matrix, n_params, norm_mat, valid_pre, test_pre, item_group_idx = load_data(args, logger=logger)
+    train_cf, user_dict, sp_matrix, n_params, norm_mat, valid_pre, test_pre, item_group_idx = load_data(args, logger=logger)
         
     train_cf_size = len(train_cf)
-
     n_users = n_params['n_users']
     n_items = n_params['n_items']
     n_negs = args.n_negs
     K = args.K
     args.Ks = eval(args.Ks)
-    # sample = Sample_cpp(user_dict, n_users, n_items)
     sample = Sample(user_dict, n_users, n_items, sampling_method=args.sampling_method, train_cf=train_cf, train_mat=sp_matrix['train_sp_mat'], test_mat=sp_matrix['test_sp_mat'])
     train_cf = torch.LongTensor(np.array([[cf[0], cf[1]] for cf in train_cf], np.int32))
-    # print(item_group_idx)
-    # np.save("item_group_idx.npy", np.array(item_group_idx))
-    # item_group_idx = torch.from_numpy(np.array(item_group_idx)).long().to(device)
-    
     """define model"""
     from modules.MF_simplex_alpha import MF
     from modules.MF_positive2 import MF_pos2
@@ -311,66 +280,15 @@ if __name__ == '__main__':
     from modules.SimSGL_Frame_bsl import simsgl_frame_bsl
     from modules.LightGCL import lightgcl_frame
     from modules.LightGCL_bsl import lightgcl_frame_bsl
-    if args.gnn == 'mf_simplex':
-        model = MF(n_params, args, norm_mat, logger).to(device)
-    elif args.gnn == "lgn":
-        model = LightGCN_UserNce(n_params, args, norm_mat).to(device)
-    elif args.gnn == "lgn_simplex":
-        model = LGN_simplex(n_params, args, norm_mat, logger).to(device)
-    elif args.gnn == "mf_pos2":
-        model = MF_pos2(n_params, args, norm_mat, logger).to(device)
-    elif args.gnn == "mf_group":
-        model = MF_group(n_params, args, norm_mat, item_group_idx, logger).to(device)
-    elif args.gnn == "mf_frame":
+    
+    if args.gnn == "mf_frame":
         model = mf_frame(n_params, args, norm_mat, item_group_idx, logger, len(train_cf)).to(device)
-    elif args.gnn == "mf_frame_align":
-        model = mf_frame_align(n_params, args, norm_mat, item_group_idx, logger, len(train_cf)).to(device)
-    elif args.gnn == "dro_frame":
-        model = dro_frame(n_params, args, norm_mat, item_group_idx, logger, len(train_cf)).to(device)
-    elif args.gnn == "mf_uniform":
-        model = mf_uniform(n_params, args, norm_mat, item_group_idx, logger, len(train_cf)).to(device)
     elif args.gnn == "lgn_frame":
         model = lgn_frame(n_params, args, norm_mat, item_group_idx, logger, len(train_cf)).to(device)
-    elif args.gnn == "ngcf_frame":
-        model = ngcf_frame(n_params, args, norm_mat, item_group_idx, logger, len(train_cf)).to(device)
-    elif args.gnn == "dgcf_frame":
-        model = dgcf_frame(n_params, args, norm_mat, item_group_idx, logger, len(train_cf)).to(device)
-    elif args.gnn == "enmf_frame":
-        model = enmf_frame(n_params, args, norm_mat, item_group_idx, logger, len(train_cf)).to(device)
-    elif args.gnn == "line_frame":
-        model = line_frame(n_params, args, norm_mat, item_group_idx, logger, len(train_cf)).to(device)
-    elif args.gnn == "lrgcf_frame":
-        model = lrgcf_frame(n_params, args, norm_mat, item_group_idx, logger, len(train_cf)).to(device)
-    elif args.gnn == "sgl_frame":
-        model = sgl_frame(n_params, args, norm_mat, item_group_idx, logger, len(train_cf)).to(device)
-    elif args.gnn == "sgl_frame_bsl":
-        model = sgl_frame_bsl(n_params, args, norm_mat, item_group_idx, logger, len(train_cf)).to(device)
-    elif args.gnn == "ncl_frame":
-        model = ncl_frame(n_params, args, norm_mat, item_group_idx, logger, len(train_cf)).to(device)
-    elif args.gnn == "simsgl_frame":
-        model = simsgl_frame(n_params, args, norm_mat, item_group_idx, logger, len(train_cf)).to(device)
-    elif args.gnn == "simsgl_frame_bsl":
-        model = simsgl_frame_bsl(n_params, args, norm_mat, item_group_idx, logger, len(train_cf)).to(device)
-    elif args.gnn == "lightgcl_frame":
-        model = lightgcl_frame(n_params, args, norm_mat, item_group_idx, logger, len(train_cf)).to(device)
-    elif args.gnn == "lightgcl_frame_bsl":
-        model = lightgcl_frame_bsl(n_params, args, norm_mat, item_group_idx, logger, len(train_cf)).to(device)
     else:
         raise NotImplementedError
     """define optimizer"""
-    if args.trans_mode == "gd":
-        dro_params = []
-        for pname, p in model.named_parameters():
-            if pname == "temperature":
-                dro_params += [p]
-        params_id = list(map(id, dro_params)) 
-        other_params = list(filter(lambda p: id(p) not in params_id, model.parameters()))
-        optimizer = torch.optim.Adam(other_params, lr=args.lr)
-        optimizer_drp = torch.optim.Adam(dro_params, lr=args.lr)
-    elif args.trans_mode == "newton":
-        optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
-    else:
-        optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
+    optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
     kill_cnt = 0
     best_ndcg = -np.inf
     eval_earlystop = args.eval_earlystop.split('@')
@@ -398,11 +316,6 @@ if __name__ == '__main__':
             tau_tmp = []
             uniform_scores = []
             aligh_scores = []
-            # NCL specific
-            if args.gnn == "ncl_frame" and epoch > 20:
-                model.warm_up = True
-            if args.gnn == "dro_frame" and epoch > 20:
-                model.warm_up = True
             while s + args.batch_size <= len(train_cf):
                 # print('Step: {}'.format(s))
                 batch = sample.get_feed_dict(train_cf_,
@@ -411,14 +324,6 @@ if __name__ == '__main__':
                                     args.sampling_method,
                                     n_negs)
                 loss, emb_loss, neg_rate = model(batch)
-
-                if args.loss_fn == "DCL_Loss":
-                    neg_rate_np.append(neg_rate.item())
-                if args.gnn == "dro_frame" and epoch > 20:
-                    neg_rate_np.append(neg_rate)
-                if args.gnn == "mf_frame_align":
-                    uniform_scores.append(neg_rate[1].item())
-                    aligh_scores.append(neg_rate[0].item())
 
                 optimizer.zero_grad()
                 loss.backward()
@@ -435,15 +340,6 @@ if __name__ == '__main__':
                                     s, args.sampling_method,
                                     n_negs)
                 loss, emb_loss, neg_rate = model(batch, step=1)
-                # uniform_scores.append(neg_rate[0].item())
-                # aligh_scores.append(neg_rate[1].item())
-                if args.loss_fn == "DCL_Loss":
-                    neg_rate_np.append(neg_rate.item())
-                if args.gnn == "dro_frame" and epoch > 20:
-                    neg_rate_np.append(neg_rate)
-                if args.gnn == "mf_frame_align":
-                    uniform_scores.append(neg_rate[1].item())
-                    aligh_scores.append(neg_rate[0].item())
                 optimizer.zero_grad()
                 loss.backward()
                 optimizer.step()
@@ -452,13 +348,6 @@ if __name__ == '__main__':
                 loss += loss.item()
                 s += args.batch_size
 
-            if args.gnn == "mf_frame_align":
-                logger.info("Align score\tUniform score\t:{}\t{}".format(np.mean(aligh_scores), np.mean(uniform_scores)))
-
-            if args.gnn == "dro_frame" and epoch > 20:
-                neg_rate_np = torch.cat(neg_rate_np, dim=0)
-                logger.info("Tau min: {:.4} max: {:.4}".format(neg_rate_np.min(), neg_rate_np.max()))
-
             train_e_t = time.time()
             model.eval()
             with torch.no_grad():
@@ -466,24 +355,8 @@ if __name__ == '__main__':
                 valid_ret = test_sp(model, user_dict, sp_matrix, n_params, valid_pre, test_pre, mode='valid')
                 test_ret = test_sp(model, user_dict, sp_matrix, n_params, valid_pre, test_pre, mode='test')
                 valid_ed = time.time()
-            if args.trans_mode == "newton":
-                tau_tmp = torch.cat(tau_tmp, dim=0)
-                rate_tau_min = ( tau_tmp <= args.tau_min).sum().item() / tau_tmp.size(0)
-                if args.save_mle:
-                    dir_save = "./torch_save/{}".format(args.name)
-                    if not os.path.exists(dir_save):
-                        os.makedirs(dir_save)
-                    file_path_cnt = os.path.join(dir_save, "score_{}.ckpt".format(epoch))
-                    if epoch < 10 or epoch % 30 == 0:
-                        torch.save(tau_tmp, file_path_cnt)
-                print_result = 'E:{}|TAU min:{:.4}, max:{:.4}, mean:{:.4}, rate: {:.2}, train_time: {:.4}, VALID_time: {:.4}, loss: {:.4}, best_valid({}): {:.4}\n'.format(epoch, 
-                            tau_tmp.min().item(), tau_tmp.max().item(), tau_tmp.mean().item(), rate_tau_min, train_e_t - train_s_t, valid_ed - valid_st, loss, args.eval_earlystop, best_ndcg)
-            elif args.loss_fn == "DCL_Loss":
-                print_result = 'E:{}|train_time: {:.4}, VALID_time: {:.4}, loss: {:.4}, neg_rate:{:.4}, losses:{:.4}, losses_emb:{:.4}, best_valid({}): {:.4}\n'.format(epoch, 
-                            train_e_t - train_s_t, valid_ed - valid_st, loss, np.mean(neg_rate_np), np.mean(losses_all), np.mean(losses_embed), args.eval_earlystop, best_ndcg)
-            else:
-                print_result = 'E:{}|train_time: {:.4}, VALID_time: {:.4}, losses:{:.4}, losses_emb:{:.4}, best_valid({}): {:.4}\n'.format(epoch, 
-                            train_e_t - train_s_t, valid_ed - valid_st, np.mean(losses_all), np.mean(losses_embed), args.eval_earlystop, best_ndcg)
+            print_result = 'E:{}|train_time: {:.4}, VALID_time: {:.4}, losses:{:.4}, losses_emb:{:.4}, best_valid({}): {:.4}\n'.format(epoch, 
+                        train_e_t - train_s_t, valid_ed - valid_st, np.mean(losses_all), np.mean(losses_embed), args.eval_earlystop, best_ndcg)
             for k in args.Ks:
                 print_result += 'valid \t N@{}: {:.4}, R@{}: {:.4}, P@{}: {:.4}\n'.format(
                     k, valid_ret[0][k-1], k, valid_ret[1][k-1], k, valid_ret[2][k-1])
@@ -521,7 +394,6 @@ if __name__ == '__main__':
         with torch.no_grad():
             test_ret = test_sp(model, user_dict, sp_matrix, n_params, valid_pre, test_pre, item_group_idx, mode='test')
 
-        # logger.info('Test result: NDCG@20: {:.4} Recall@20: {:.4}'.format(test_ret[0], test_ret[1]))
         print_result = '\n'
         for k in args.Ks:
             print_result += 'TEST \t N@{}: {:.4}, R@{}: {:.4}, P@{}: {:.4}\n'.format(
