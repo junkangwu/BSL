@@ -15,3 +15,6 @@ SAVE
 scripts
 weights
 modules_
+data/amazon
+data/gowalla
+data/ml
