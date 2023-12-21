@@ -4,6 +4,7 @@ for Recommendation
 </h2>
 <p align='center'>
 <img src='https://github.com/junkangwu/BSL/blob/master/bash/first_fig_page-0001.jpg?raw=true' width='500'/>
+<center><figcaption>Performance comparison of different loss functions based on MF and LightGCN on the Yelp2018 and Amazon datasets. SL consistently achieves superior performance over other losses by a significant margin (>15% gain) across models and datasets.</figcaption></center>
 </p>
 <div align="center">
 
