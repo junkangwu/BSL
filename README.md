@@ -1,6 +1,5 @@
 <h2 align="center">
-BSL: Understanding and Improving Softmax Loss
-for Recommendation
+BSL: Understanding and Improving Softmax Loss for Recommendation
 </h2>
 <p align='center'>
 <img src='https://github.com/junkangwu/BSL/blob/master/bash/first_fig_page-0001.jpg?raw=true' width='500'/>
