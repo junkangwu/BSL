@@ -1,3 +1,20 @@
+<h2 align="center">
+BSL: Understanding and Improving Softmax Loss
+for Recommendation
+</h2>
+<p align='center'>
+<img src='https://github.com/junkangwu/ADNCE/blob/master/adnce.jpg?raw=true' width='500'/>
+</p>
+<div align="center">
+
+[![](https://img.shields.io/badge/paper-pink?style=plastic&logo=GitBook)](https://arxiv.org/pdf/2312.12882.pdf)
+[![](https://img.shields.io/badge/-github-green?style=plastic&logo=github)](https://github.com/junkangwu/BSL) 
+
+</div>
+
+This is the PyTorch implementation for our ICDE 2024 paper. 
+> Junkang Wu, Jiawei Chen, Jiancan Wu, Wentao Shi, Jizhi Zhang, Xiang Wang 2024. BSL: Understanding and Improving Softmax Loss for Recommendation. [arxiv link](https://arxiv.org/pdf/2312.12882.pdf)
+
 ## Prerequisites
 - Python 3.9
 - PyTorch 1.11.0
