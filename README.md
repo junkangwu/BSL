@@ -106,7 +106,7 @@ bash lgn_Frame_pos.sh 1e-3 1e-5 1024 800 0.15  1.10 0 reweight nodrop ml 1 50 co
 
 
 ## Documentation
-Thanks to their simple forms, these losses are implemented in just a few lines of code in [`utils/losses.py.py`](utils/losses.py#L429-L432):
+Thanks to their simple forms, these losses are implemented in just a few lines of code in [`utils/losses.py.py`](utils/losses.py#L19-L36):
 ```py
 # bsz : batch size (number of positive pairs)
 # y_pred[:, 0]:  prediction score of postive samples, shape=[bsz]
