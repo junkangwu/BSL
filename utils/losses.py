@@ -4,7 +4,6 @@ import torch.nn as nn
 import torch
 import torch.nn.functional as F
 import numpy as np
-from torch_scatter import scatter
 
 class BSL(nn.Module):
     def __init__(self, temperature=1., temperature2=1., temperature3=1., mode="test", device=None):
@@ -31,11 +30,6 @@ class BSL(nn.Module):
             neg_logits = torch.mean(neg_logits, dim=-1)
         elif self.mode == "reweight":
             neg_logits = neg_logits.sum(dim=-1)
-            neg_logits = torch.pow(neg_logits, self.temperature_2)
-        elif self.mode == "once":
-            unique_user, index = torch.unique(user, return_inverse=True, sorted=True)
-            pos_logits = scatter(pos_logits, index, dim=0, reduce='mean')
-            neg_logits = scatter(neg_logits, index, dim=0, reduce='mean').mean(dim=-1) # n_unique_user
             neg_logits = torch.pow(neg_logits, self.temperature_2)
  
         loss = - torch.log(pos_logits / neg_logits).mean()
