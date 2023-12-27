@@ -10,7 +10,7 @@ import heapq
 from time import time
 # from scipy import sparse
 cores = multiprocessing.cpu_count() // 2
-import bottleneck as bn
+# import bottleneck as bn
 args = parse_args()
 Ks = eval(args.Ks)
 device = torch.device("cuda:0") if args.cuda else torch.device("cpu")
