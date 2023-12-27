@@ -103,8 +103,7 @@ class lgn_frame(nn.Module):
         self.item_embed = nn.Parameter(self.item_embed)
         self.mode = args_config.pos_mode
         # define loss function
-        self.loss_fn = losses.Pos_DROLoss(self.temperature_1, self.temperature_2, self.temperature_3, args_config.loss_re, self.mode, self.device)
-        self.loss_name = args_config.loss_fn
+        self.loss_fn = losses.BSL(self.temperature_1, self.temperature_2, self.temperature_3, self.mode, self.device)
         self.gcn = self._init_model()
         self.sampling_method = args_config.sampling_method
         print("sample method is {}".format(self.sampling_method))

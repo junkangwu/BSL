@@ -35,30 +35,30 @@ bash lgn_Frame.sh $lr $l2 $n_negs $bsz $t1 $t2 $GPU_ID $loss_mode $DATASET_NAME 
 #### Yelp2018
 ```
 # SL
-bash MF_Frame_pos.sh 1e-4 1e-3 800 1024 0.11 1.00 0 reweight yelp2018 drop Pos_DROLoss
+bash MF_Frame_pos.sh 1e-4 1e-3 800 1024 0.11 1.00 0 reweight yelp2018 drop
 # BSL
-bash MF_Frame_pos.sh 1e-4 1e-3 800 1024 0.11 1.10 0 multi yelp2018 drop Pos_DROLoss
+bash MF_Frame_pos.sh 1e-4 1e-3 800 1024 0.11 1.10 0 multi yelp2018 drop
 ```
 #### Amazon
 ```
 # SL
-bash MF_Frame_pos.sh 5e-4 1e-3 1024 1024 0.14 1.00 1 reweight amazon drop Pos_DROLoss
+bash MF_Frame_pos.sh 5e-4 1e-3 1024 1024 0.14 1.00 0 reweight amazon drop
 # BSL
-bash MF_Frame_pos.sh 5e-4 1e-3 1024 1024 0.14 1.32 1 reweight amazon drop Pos_DROLoss
+bash MF_Frame_pos.sh 5e-4 1e-3 1024 1024 0.14 1.32 0 reweight amazon drop
 ```
 #### Gowalla
 ```
 # SL
-bash MF_Frame_pos.sh 1e-4 1e-9 800 1024 0.08 1.00 0 reweight gowalla drop Pos_DROLoss
+bash MF_Frame_pos.sh 1e-4 1e-9 800 1024 0.08 1.00 0 reweight gowalla drop
 # BSL
-bash MF_Frame_pos.sh 1e-4 1e-9 800 1024 0.08 1.22 0 multi gowalla drop Pos_DROLoss
+bash MF_Frame_pos.sh 1e-4 1e-9 800 1024 0.08 1.22 0 multi gowalla drop
 ```
 #### Movielens-1M
 ```
 # SL
-bash MF_Frame_pos.sh 1e-4 1e-3 800 2048 0.17 1.00 0 reweight ml nodrop Pos_DROLoss
+bash MF_Frame_pos.sh 1e-4 1e-3 800 2048 0.17 1.00 0 reweight ml nodrop
 # BSL
-bash MF_Frame_pos.sh 1e-4 1e-3 800 2048 0.17 1.06 0 multi ml nodrop Pos_DROLoss
+bash MF_Frame_pos.sh 1e-4 1e-3 800 2048 0.17 1.06 0 multi ml nodrop
 ```
 
 ### LightGCN
@@ -73,31 +73,31 @@ bash lgn_Frame_pos.sh $lr $l2 $n_negs $bsz $t1 $t2 $GPU_ID $loss_mode $drop $los
 #### yelp2018
 ```
 # SL
-bash lgn_Frame_pos.sh 1e-3 1e-5 1024 1024 0.15 1.00 0 reweight nodrop Pos_DROLoss yelp2018 3 50 no_cosine no_sample
+bash lgn_Frame_pos.sh 1e-3 1e-5 1024 1024 0.15 1.00 0 reweight nodrop yelp2018 3 50 no_cosine no_sample
 # BSL
-bash lgn_Frame_pos.sh 1e-3 1e-5 1024 1024 0.15 1.12 0 reweight nodrop Pos_DROLoss yelp2018 3 50 no_cosine no_sample
+bash lgn_Frame_pos.sh 1e-3 1e-5 1024 1024 0.15 1.12 0 reweight nodrop yelp2018 3 50 no_cosine no_sample
 ```
 #### Amazon
 ```
 # SL
-bash lgn_Frame_pos.sh 1e-3 1e-1 4096 800 0.30  1.00 0 reweight nodrop Pos_DROLoss amazon 3 50 no_cosine no_sample
+bash lgn_Frame_pos.sh 1e-3 1e-1 4096 800 0.30  1.00 0 reweight nodrop amazon 3 50 no_cosine no_sample
 # BSL
-bash lgn_Frame_pos.sh 1e-3 1e-1 4096 800 0.30  0.80 0 reweight nodrop Pos_DROLoss amazon 3 50 no_cosine no_sample
+bash lgn_Frame_pos.sh 1e-3 1e-1 4096 800 0.30  0.80 0 reweight nodrop amazon 3 50 no_cosine no_sample
 ```
 
 #### Gowalla
 ```
 # SL
-bash lgn_Frame_pos.sh 1e-3 1e-5 1024 800 0.15  1.00 0 reweight nodrop Pos_DROLoss ml 1 50 cosine uniform
+bash lgn_Frame_pos.sh 1e-3 1e-5 1024 800 0.15  1.00 0 reweight nodrop ml 1 50 cosine uniform
 # BSL
-bash lgn_Frame_pos.sh 1e-3 1e-5 1024 800 0.15  1.10 3 reweight nodrop Pos_DROLoss ml 1 50 cosine uniform
+bash lgn_Frame_pos.sh 1e-3 1e-5 1024 800 0.15  1.10 0 reweight nodrop ml 1 50 cosine uniform
 ```
 #### Movielens-1M
 ```
 # SL
-bash lgn_Frame_pos.sh 1e-3 1e-5 1024 800 0.15  1.00 0 reweight nodrop Pos_DROLoss ml 1 50 cosine uniform
+bash lgn_Frame_pos.sh 1e-3 1e-5 1024 800 0.15  1.00 0 reweight nodrop ml 1 50 cosine uniform
 # BSL
-bash lgn_Frame_pos.sh 1e-3 1e-5 1024 800 0.15  1.10 0 reweight nodrop Pos_DROLoss ml 1 50 cosine uniform
+bash lgn_Frame_pos.sh 1e-3 1e-5 1024 800 0.15  1.10 0 reweight nodrop ml 1 50 cosine uniform
 ```
 
 

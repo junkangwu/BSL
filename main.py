@@ -2,7 +2,6 @@
 import argparse
 import os
 import random
-from modules.MF_group import MF_group
 
 import torch
 import numpy as np
@@ -15,7 +14,7 @@ from copy import deepcopy
 import logging
 # from prettytable import PrettyTable
 # from torch_scatter import scatter
-from utils.data_loader import load_data, load_data_ciao
+from utils.data_loader import load_data
 from utils.evaluate import test_sp
 from utils.helper import early_stopping
 import torch.nn.functional as F
@@ -243,11 +242,7 @@ if __name__ == '__main__':
     device = torch.device("cuda:0") if args.cuda else torch.device("cpu")
     if not args.restore: 
         args.name = args.name + '_' + time.strftime('%d_%m_%Y') + '_' + time.strftime('%H:%M:%S')
-    if args.bash_train:
-        new_log_dir = args.log_dir + args.name[:args.name.find('D')-1] + '/'
-        if not os.path.exists(new_log_dir):
-            os.makedirs(new_log_dir)
-        args.log_dir = new_log_dir
+    
     logger = get_logger(args.name, args.log_dir, args.config_dir)
     logger.info(vars(args))
     train_cf, user_dict, sp_matrix, n_params, norm_mat, valid_pre, test_pre, item_group_idx = load_data(args, logger=logger)
@@ -261,25 +256,8 @@ if __name__ == '__main__':
     sample = Sample(user_dict, n_users, n_items, sampling_method=args.sampling_method, train_cf=train_cf, train_mat=sp_matrix['train_sp_mat'], test_mat=sp_matrix['test_sp_mat'])
     train_cf = torch.LongTensor(np.array([[cf[0], cf[1]] for cf in train_cf], np.int32))
     """define model"""
-    from modules.MF_simplex_alpha import MF
-    from modules.MF_positive2 import MF_pos2
     from modules.MF_Frame import mf_frame
     from modules.LGN_Frame import lgn_frame
-    from modules.MF_Uniform import mf_uniform
-    from modules.NGCF_Frame import ngcf_frame
-    from modules.DGCF_Frame import dgcf_frame
-    from modules.ENMF_Frame import enmf_frame
-    from modules.LINE_Frame import line_frame
-    from modules.LRGCF_Frame import lrgcf_frame
-    from modules.SGL_Frame import sgl_frame
-    from modules.NCL_Frame import ncl_frame
-    from modules.SimSGL_Frame import simsgl_frame
-    from modules.DRO_Frame import dro_frame
-    from modules.MF_Frame_align import mf_frame_align
-    from modules.SGL_Frame_bsl import sgl_frame_bsl
-    from modules.SimSGL_Frame_bsl import simsgl_frame_bsl
-    from modules.LightGCL import lightgcl_frame
-    from modules.LightGCL_bsl import lightgcl_frame_bsl
     
     if args.gnn == "mf_frame":
         model = mf_frame(n_params, args, norm_mat, item_group_idx, logger, len(train_cf)).to(device)

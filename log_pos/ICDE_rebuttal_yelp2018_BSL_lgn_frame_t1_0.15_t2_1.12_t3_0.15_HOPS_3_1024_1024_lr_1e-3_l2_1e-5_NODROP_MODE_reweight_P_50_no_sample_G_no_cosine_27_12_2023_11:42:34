@@ -1,0 +1,39 @@
+2023-12-27 11:42:34,521 - [INFO] - {'dataset': 'yelp2018', 'data_path': './data/', 'name': 'ICDE_rebuttal_yelp2018_BSL_lgn_frame_t1_0.15_t2_1.12_t3_0.15_HOPS_3_1024_1024_lr_1e-3_l2_1e-5_NODROP_MODE_reweight_P_50_no_sample_G_no_cosine_27_12_2023_11:42:34', 'train_ratio': 0.8, 'gnn': 'lgn_frame', 'epoch': 1000, 'batch_size': 1024, 'test_batch_size': 2048, 'dim': 64, 'l2': 1e-05, 'lr': 0.001, 'mess_dropout': False, 'mess_dropout_rate': 0.1, 'edge_dropout': False, 'edge_dropout_rate': 0.1, 'batch_test_flag': True, 'ns': 'mixgcf', 'K': 1, 'n_negs': 1024, 'pool': 'mean', 'cuda': True, 'gpu_id': 0, 'Ks': '[5, 10, 15, 20]', 'test_flag': 'part', 'context_hops': 3, 'eval_earlystop': 'recall@20', 'tau_plus': 0.1, 'temperature': 0.15, 'beta': 1.0, 'sample_num': 2048, 's_neg': 64, 's_pos': 64, 'norm_change': False, 'norm_path': None, 'u_norm': True, 'i_norm': True, 'alpha': 0.1, 'save': False, 'save_analyses': False, 'log_hard_rate': False, 'norm_before': False, 'norm_after': False, 'batch_var': False, 'out_dir': './weights/', 'log_dir': './log_pos/', 'config_dir': './config/', 'restore': False, 'emb_l2': False, 'lam': 0.1, 'loss_fn': 'Pos_DROLoss', 'sampling_method': 'no_sample', 'load_name': 'uniform', 'generate_mode': 'no_cosine', 'temperature_2': 1.12, 'temperature_3': 0.15, 'neg_rate': '', 'pos_mode': 'reweight', 't_patience': 50}
+2023-12-27 11:42:36,187 - [INFO] - load train.txt
+2023-12-27 11:42:39,703 - [INFO] - building the adj mat ...
+2023-12-27 11:42:40,206 - [INFO] - train set len is 1237259
+2023-12-27 11:42:40,207 - [INFO] - test set len is 324147
+2023-12-27 11:42:40,207 - [INFO] - loading over ...
+2023-12-27 11:42:40,207 - [INFO] - users are 31668 items are 38048
+2023-12-27 11:42:45,989 - [INFO] - Evaluation Protocols is 1 @ 20
+2023-12-27 11:42:45,989 - [INFO] - start training ...
+2023-12-27 11:43:37,129 - [INFO] - E:0|train_time: 50.3, VALID_time: 0.7977, losses:5.637, losses_emb:5.477e-07, best_valid(recall@20): -inf
+valid 	 N@5: 0.04008, R@5: 0.02127, P@5: 0.03805
+valid 	 N@10: 0.04267, R@10: 0.03713, P@10: 0.03351
+valid 	 N@15: 0.04743, R@15: 0.05092, P@15: 0.03071
+valid 	 N@20: 0.05213, R@20: 0.0633, P@20: 0.02871
+
+2023-12-27 11:44:26,686 - [INFO] - E:1|train_time: 48.74, VALID_time: 0.7637, losses:5.322, losses_emb:1.282e-06, best_valid(recall@20): 0.0633
+valid 	 N@5: 0.04247, R@5: 0.02247, P@5: 0.04025
+valid 	 N@10: 0.04518, R@10: 0.03932, P@10: 0.0354
+valid 	 N@15: 0.05023, R@15: 0.05397, P@15: 0.03247
+valid 	 N@20: 0.05497, R@20: 0.06658, P@20: 0.03015
+
+2023-12-27 11:45:16,249 - [INFO] - E:2|train_time: 48.74, VALID_time: 0.7591, losses:5.249, losses_emb:2.065e-06, best_valid(recall@20): 0.06658
+valid 	 N@5: 0.04407, R@5: 0.02317, P@5: 0.04178
+valid 	 N@10: 0.04643, R@10: 0.04012, P@10: 0.0362
+valid 	 N@15: 0.05171, R@15: 0.05535, P@15: 0.03334
+valid 	 N@20: 0.05663, R@20: 0.06843, P@20: 0.03101
+
+2023-12-27 11:46:06,109 - [INFO] - E:3|train_time: 49.04, VALID_time: 0.7529, losses:5.213, losses_emb:2.949e-06, best_valid(recall@20): 0.06843
+valid 	 N@5: 0.04465, R@5: 0.02354, P@5: 0.04219
+valid 	 N@10: 0.04741, R@10: 0.04111, P@10: 0.03702
+valid 	 N@15: 0.05251, R@15: 0.05608, P@15: 0.03379
+valid 	 N@20: 0.05742, R@20: 0.06916, P@20: 0.03138
+
+2023-12-27 11:46:55,541 - [INFO] - E:4|train_time: 48.48, VALID_time: 0.8789, losses:5.19, losses_emb:3.93e-06, best_valid(recall@20): 0.06916
+valid 	 N@5: 0.04542, R@5: 0.02399, P@5: 0.04285
+valid 	 N@10: 0.04791, R@10: 0.04135, P@10: 0.03719
+valid 	 N@15: 0.05318, R@15: 0.05658, P@15: 0.03412
+valid 	 N@20: 0.05808, R@20: 0.06971, P@20: 0.03163
+
