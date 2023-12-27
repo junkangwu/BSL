@@ -10,8 +10,6 @@ import os
 import sys
 sys.path.append("..")
 from utils import losses
-from scipy.special import lambertw
-from torch_scatter import scatter
 from random import sample
 class mf_frame(nn.Module):
     def __init__(self, data_config, args_config, adj_mat, item_group_idx=None, logger=None, train_cf_len=None):

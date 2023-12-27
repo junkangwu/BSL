@@ -10,8 +10,6 @@ import os
 import sys
 sys.path.append("..")
 from utils import losses
-from scipy.special import lambertw
-from torch_scatter import scatter
 from random import sample
 
 class GraphConv(nn.Module):
