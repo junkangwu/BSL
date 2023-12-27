@@ -35,7 +35,7 @@ bash lgn_Frame.sh $lr $l2 $n_negs $bsz $t1 $t2 $GPU_ID $loss_mode $DATASET_NAME 
 #### Yelp2018
 ```
 # SL
-bash MF_Frame_pos.sh 1e-4 1e-3 800 1024 0.11 1.00 0 reweight yelp2018 drop
+bash MF_Frame_pos.sh 1e-4 1e-3 800 1024 0.11 1.00 2 reweight yelp2018 drop
 # BSL
 bash MF_Frame_pos.sh 1e-4 1e-3 800 1024 0.11 1.10 0 multi yelp2018 drop
 ```
